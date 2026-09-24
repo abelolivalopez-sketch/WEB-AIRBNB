@@ -10,9 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Fraunces:opsz,wght@9..144,300..700&display=swap" rel="stylesheet">
 
-<!-- =====================================================================
-     1. CONFIGURACIÓN  —  LO PRIMERO QUE HAY QUE EDITAR
-     ===================================================================== -->
+
 <script>
 const CONFIG = {
   name: "Le Jardin des Coqs",
@@ -52,22 +50,21 @@ const CONFIG = {
 
   // ---- CONTACTO (formulario de preguntas) ----
   contact: {
-    email: "jeanneadeline02@gmail.com",   // <- aquí llegarán los mensajes (cámbialo)
-    whatsapp: "33616911509",            // solo números con prefijo, ej. "33612345678"
-    // Opcional: para recibir los mensajes sin abrir el correo del visitante,
-    // crea un formulario gratis en formspree.io y pega aquí su URL.
+    email: "jeanneadeline02@gmail.com",  
+    whatsapp: "33616911509",            
+    
     formEndpoint: ""
   },
 
-  stay: { maxGuests: 2 },    // máximo de huéspedes (ajústalo)
+  stay: { maxGuests: 2 },    // máximo de huéspedes 
 
   // ---- FOTOS ----
-  // La foto principal del jardín se pone en el HTML (busca "FOTO DEL JARDÍN").
+  // La foto principal del jardín la pones en el HTML Abelitoo.
   photos: {
     claire: "claire.jpg",              // foto de Claire
     places: ["tapisseriebayeux.webp", "bayeuxciudad.jpg", "goldbeach.webp"],    // fotos reales de: Tapisserie · centro histórico · costa (opcional; si están vacías se ven ilustraciones)
     gallery: [               // añade o quita filas; el diseño se adapta solo
-      { src: "Jardingrande.jpg", alt: "El jardín por la mañana" },
+      { src: "Jardin_grande.jpg", alt: "El jardín por la mañana" },
       { src: "salon.jpg", alt: "El salón del apartamento" },
       { src: "cocina.jpg", alt: "La cocina" },
       { src: "dormitorio.jpg", alt: "El dormitorio" },
@@ -209,7 +206,7 @@ const I18N = {
 <!-- =====================================================================
      3. ESTILOS
      Estilo: blancos y azules del Egeo, limpio, con la greca griega como
-     detalle. Para cambiar la paleta edita solo las variables de :root.
+     detalle. Para cambiar la paleta edita solo las variables de :root. es lo que te da los colores (coleres de internet )
      ===================================================================== -->
 <style>
 :root {
@@ -491,7 +488,7 @@ dialog.lightbox::backdrop { background: rgba(14, 42, 77, .92); }
         <!-- ▼▼▼ FOTO DEL JARDÍN: pega entre las comillas la ruta de tu imagen ▼▼▼
              Ejemplo:  src="fotos/jardin.jpg"   o   src="https://tu-sitio.com/jardin.jpg"
              Mientras esté vacío se ve el marcador azul de arriba. -->
-        <img class="garden-img" id="gardenImg" src="Jardin_grande.jpg" alt="">
+        <img class="garden-img" id="gardenImg" src="jardin.jpg" alt="">
         <!-- ▲▲▲ FIN FOTO DEL JARDÍN ▲▲▲ -->
       </span>
       <span class="door door-l"></span>
@@ -703,10 +700,7 @@ dialog.lightbox::backdrop { background: rgba(14, 42, 77, .92); }
   </div>
 </section>
 
-<!-- ╔═══════════════════════════════════════════════════════════════════╗
-     ║  MÓDULO: EL PERRITO QUE HAY QUE ALIMENTAR  (copia todo este bloque) ║
-     ║  Contiene: estilos + sección + lógica. Es independiente del resto. ║
-     ╚═══════════════════════════════════════════════════════════════════╝ -->
+
 <style>
 /* ---------- Perrito: estilos (usan los colores de la web si existen) ---------- */
 .dog-sec .dog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 4.5rem); align-items: center; width: min(1120px, 100% - 2.5rem); margin-inline: auto; }
