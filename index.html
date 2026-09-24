@@ -64,15 +64,15 @@ const CONFIG = {
   // ---- FOTOS ----
   // La foto principal del jardín se pone en el HTML (busca "FOTO DEL JARDÍN").
   photos: {
-    claire: "claire_perfil",              // foto de Claire
-    places: ["tapisserie_bayeux", "bayeux_ciudad", "gold_beach"],    // fotos reales de: Tapisserie · centro histórico · costa (opcional; si están vacías se ven ilustraciones)
+    claire: "claire_perfil.jpg",              // foto de Claire
+    places: ["tapisserie_bayeux.jpg", "bayeux_ciudad.jpg", "gold_beach.jpg"],    // fotos reales de: Tapisserie · centro histórico · costa (opcional; si están vacías se ven ilustraciones)
     gallery: [               // añade o quita filas; el diseño se adapta solo
-      { src: "Jardin_grande", alt: "El jardín por la mañana" },
+      { src: "Jardin_grande.jpg", alt: "El jardín por la mañana" },
       { src: "", alt: "El salón del apartamento" },
       { src: "", alt: "La cocina" },
       { src: "", alt: "El dormitorio" },
       { src: "", alt: "Un rincón del jardín" },
-      { src: "Pequeño jardin", alt: "Vista general del jardín" }
+      { src: "Pequeño jardin.jpg", alt: "Vista general del jardín" }
     ]
   }
 };
@@ -491,7 +491,7 @@ dialog.lightbox::backdrop { background: rgba(14, 42, 77, .92); }
         <!-- ▼▼▼ FOTO DEL JARDÍN: pega entre las comillas la ruta de tu imagen ▼▼▼
              Ejemplo:  src="fotos/jardin.jpg"   o   src="https://tu-sitio.com/jardin.jpg"
              Mientras esté vacío se ve el marcador azul de arriba. -->
-        <img class="garden-img" id="gardenImg" src="escritorio/Jardin_grande.jpg" alt="">
+        <img class="garden-img" id="gardenImg" src="Jardin_grande.jpg" alt="">
         <!-- ▲▲▲ FIN FOTO DEL JARDÍN ▲▲▲ -->
       </span>
       <span class="door door-l"></span>
