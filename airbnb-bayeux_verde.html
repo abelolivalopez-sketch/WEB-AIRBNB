@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TinyHouse Bayeux · Apartamento con jardín en Bayeux</title>
+<meta name="description" content="TinyHouse Bayeux: pequeño apartamento con un jardín espléndido en el centro histórico de Bayeux, Normandía. 17 rue aux Coqs, 14400 Bayeux.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M5 30V14a11 11 0 0 1 22 0v16z' fill='%232F6D4F'/%3E%3Cpath d='M10 30V15a6 6 0 0 1 12 0v15z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Fraunces:opsz,wght@9..144,300..700&display=swap" rel="stylesheet">
+
+
+<script>
+const CONFIG = {
+  name: "TinyHouse Bayeux",
+  defaultLang: "en",                   // "es" | "fr" | "en"
+  autoDetectLang: true,                // true = cada visitante ve su idioma si existe
+  hostLang: "en",                      // idioma de los emails que RECIBES
+
+  address: {
+    line: "17 rue aux Coqs",
+    postalCity: "14400 Bayeux",
+    country: "France"
+  },
+
+  // ---- SECCIONES: elige cuáles se ven y en qué orden ----
+  // Borra una línea para ocultar esa sección. Cambia el orden de las líneas
+  // para moverlas. Opciones: apartamento · bayeux · galeria · reservar · ubicacion · perrito
+  sections: [
+    "apartamento",
+    "bayeux",
+    "galeria",
+    "reservar",
+    "ubicacion",
+    "perrito"        
+  ],
+
+  // ---- LINKS: pega aquí las URL de tus páginas ----
+  // Airbnb, Booking y Tripadvisor salen como botones de reserva.
+  // Mientras estén vacíos, el botón aparece como "Próximamente".
+  links: {
+    airbnb: "https://www.airbnb.fr/rooms/38870056?adults=2&search_mode=regular_search&check_in=2026-10-30&check_out=2026-11-04&children=0&infants=0&pets=0&source_impression_id=p3_2281a02b-05e5-48ae-b274-1f55261ff674_f43e76f8-0570-49e0-906c-0bbf9ba56ffc_0_38870056_5&previous_page_section_name=1000&federated_search_id=2281a02b-05e5-48ae-b274-1f55261ff674",        // ej. "https://www.airbnb.fr/rooms/123456"
+    booking: "https://www.booking.com/hotel/fr/tiny-house-au-coeur-de-bayeux.fr.html?aid=2311236&label=en-fr-booking-desktop-Akb7DsuMl_04Kj1fagYeEgS652796016858%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-65526620%3Alp9055078%3Ali%3Adec%3Adm&sid=467d692afbafbee7ba0a8305c36042df&dest_id=-1410836&dest_type=city&dist=0&group_adults=2&group_children=0&hapos=5&hpos=5&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&srepoch=1790234194&srpvid=806d331d5ceb0455&type=total&ucfs=1&",       // ej. "https://www.booking.com/hotel/fr/..."
+    tripadvisor: "",   // ej. "https://www.tripadvisor.fr/..."
+    instagram: "",     // (opcional, sale en el pie de página)
+    facebook: "https://www.facebook.com/claire.adeline.1/",
+    website: ""
+  },
+
+  // ---- CONTACTO (formulario de preguntas) ----
+  contact: {
+    email: "jeanneadeline02@gmail.com",  
+    whatsapp: "33616911509",            
+    
+    formEndpoint: ""
+  },
+
+  stay: { maxGuests: 2 },    // máximo de huéspedes 
+
+  // ---- FOTOS ----
+  // La foto principal del jardín la pones en el HTML Abelitoo.
+  photos: {
+    claire: "claire.jpg",              // foto de Claire
+    places: ["tapisseriebayeux.webp", "bayeuxciudad.jpg", "goldbeach.webp"],    // fotos reales de: Tapisserie · centro histórico · costa (opcional; si están vacías se ven ilustraciones)
+    gallery: [               // añade o quita filas; el diseño se adapta solo
+      { src: "Jardin_grande.jpg" },
+      { src: "salon.jpg"},
+      { src: "cocina.jpg" },
+      { src: "dormitorio.jpg"},
+      { src: "exterior.jpg"},
+      { src: "jardin.jpg" }
+    ]
+  }
+};
+
+/* =====================================================================
+   2. TEXTOS (ES / FR / EN)  —  edita aquí cualquier frase de la web
+   ===================================================================== */
+const I18N = {
+  es: {
+    navAbout: "El apartamento", navBayeux: "Qué visitar", navGallery: "Galería", navBook: "Reservar",
+    navLocation: "Ubicación", menu: "Menú",
+    heroTitle: "Cruza la puerta del jardín",
+    heroLead: "Un pequeño apartamento en el corazón de Bayeux con un jardín que parece la entrada a un reino de fantasía.",
+    heroCta1: "Reservar mi estancia", heroCta2: "Ver el jardín",
+    heroToggle: "Abrir o cerrar la puerta del jardín",
+    heroPh: "Aquí irá la foto de tu jardín", heroAlt: "El jardín del apartamento",
+    aboutTitle: "Un apartamento pequeño, un jardín espléndido",
+    aboutP1: "El apartamento es pequeño y acogedor, pensado para descansar sin prisas. Lo que lo cambia todo está al otro lado de la puerta: un jardín espléndido que convierte cada mañana y cada tarde en un pequeño acontecimiento.",
+    aboutP2: "Desde aquí recorres a pie las calles del casco histórico de Bayeux y vuelves a un rincón tuyo, verde y tranquilo.",
+    amenitiesTitle: "Lo que encontrarás",
+    amenities: ["Wi-Fi gratis", "Cocina equipada", "Toallas limpias", "Jardín a tu disposición", "Llegada autónoma", "Centro histórico a pie"],
+    claireRole: "Tu anfitriona",
+    claireText: "Claire gestiona el alojamiento y está disponible para resolver tus dudas antes y durante tu estancia.",
+    bayeuxTitle: "Qué visitar en Bayeux",
+    bayeuxLead: "Tres imprescindibles para empezar.",
+    b1t: "La Tapisserie de Bayeux", b1d: "Un bordado de casi 70 metros, del siglo XI, que cuenta la conquista normanda de Inglaterra en 1066.",
+    b1n: "Ahora mismo está de viaje: se expone en el British Museum de Londres hasta julio de 2027, mientras se renueva el museo de Bayeux.",
+    b2t: "Centro histórico", b2d: "Calles empedradas, casas de entramado de madera y la catedral, a pocos pasos del apartamento.",
+    b3t: "Côte du Débarquement", b3d: "Las playas del Desembarco de 1944 y sus museos, a poca distancia en coche.",
+    galleryTitle: "Galería", galleryLead: "El apartamento y el jardín, a cada hora del día. Pulsa una foto para verla en grande.",
+    galleryPlaceholder: "Tu foto aquí", lbClose: "Cerrar", lbPrev: "Anterior", lbNext: "Siguiente",
+    bookTitle: "Reserva tu estancia",
+    bookLead: "La reserva y el pago se hacen directamente en la plataforma que elijas.",
+    platAirbnb: "Reservar en Airbnb", platBooking: "Reservar en Booking.com", platTrip: "Ver en Tripadvisor", soon: "Próximamente",
+    askTitle: "¿Tienes alguna pregunta?", askLead: "Escríbenos y Claire te responderá por correo.",
+    fName: "Nombre", fEmail: "Correo electrónico", fPhone: "Teléfono (opcional)", fIn: "Llegada (opcional)", fOut: "Salida (opcional)",
+    fGuests: "Huéspedes", fMsg: "Mensaje", fSend: "Enviar mensaje", fWhats: "Escribir por WhatsApp",
+    errDates: "Elige una fecha de salida posterior a la de llegada.",
+    errEmpty: "Escribe un mensaje o elige tus fechas.",
+    okSent: "Mensaje enviado. Claire te responderá por correo.",
+    errSend: "No se pudo enviar. Inténtalo de nuevo o escríbenos por correo.",
+    mailOpening: "Abriendo tu aplicación de correo…", sending: "Enviando…",
+    mailSubject: "Consulta desde la web",
+    locTitle: "Dónde estamos", locLead: "En pleno centro de Bayeux, Normandía.",
+    locOpen: "Abrir en Google Maps", locRoute: "Cómo llegar", locMapTitle: "Mapa con la ubicación del apartamento",
+    footManaged: "Gestionado por Claire", footLinks: "Encuéntranos también en",
+    guestOne: "1 persona", guestsN: "{n} personas"
+  },
+
+  fr: {
+    navAbout: "L'appartement", navBayeux: "À visiter", navGallery: "Galerie", navBook: "Réserver",
+    navLocation: "Localisation", menu: "Menu",
+    heroTitle: "Franchissez la porte du jardin",
+    heroLead: "Un petit appartement au cœur de Bayeux, avec un jardin qui ressemble à l'entrée d'un royaume féerique.",
+    heroCta1: "Réserver mon séjour", heroCta2: "Voir le jardin",
+    heroToggle: "Ouvrir ou fermer la porte du jardin",
+    heroPh: "La photo de votre jardin ira ici", heroAlt: "Le jardin de l'appartement",
+    aboutTitle: "Un petit appartement, un jardin splendide",
+    aboutP1: "L'appartement est petit et chaleureux, pensé pour se reposer sans se presser. Ce qui change tout se trouve de l'autre côté de la porte : un jardin splendide qui fait de chaque matin et de chaque soirée un petit événement.",
+    aboutP2: "D'ici, vous parcourez à pied les rues du centre historique de Bayeux, puis vous rentrez dans un coin à vous, vert et paisible.",
+    amenitiesTitle: "Ce que vous trouverez",
+    amenities: ["Wi-Fi gratuit", "Cuisine équipée", "Serviettes propres", "Jardin à votre disposition", "Arrivée autonome", "Centre historique à pied"],
+    claireRole: "Votre hôte",
+    claireText: "Claire gère le logement et reste disponible pour répondre à vos questions avant et pendant votre séjour.",
+    bayeuxTitle: "À visiter à Bayeux",
+    bayeuxLead: "Trois incontournables pour commencer.",
+    b1t: "La Tapisserie de Bayeux", b1d: "Une broderie de près de 70 mètres, datant du XIe siècle, qui raconte la conquête normande de l'Angleterre en 1066.",
+    b1n: "Elle voyage actuellement : elle est exposée au British Museum de Londres jusqu'en juillet 2027, pendant la rénovation du musée de Bayeux.",
+    b2t: "Centre historique", b2d: "Rues pavées, maisons à pans de bois et cathédrale, à quelques pas de l'appartement.",
+    b3t: "Côte du Débarquement", b3d: "Les plages du Débarquement de 1944 et leurs musées, à courte distance en voiture.",
+    galleryTitle: "Galerie", galleryLead: "L'appartement et le jardin, à toute heure du jour. Touchez une photo pour l'agrandir.",
+    galleryPlaceholder: "Votre photo ici", lbClose: "Fermer", lbPrev: "Précédente", lbNext: "Suivante",
+    bookTitle: "Réservez votre séjour",
+    bookLead: "La réservation et le paiement se font directement sur la plateforme de votre choix.",
+    platAirbnb: "Réserver sur Airbnb", platBooking: "Réserver sur Booking.com", platTrip: "Voir sur Tripadvisor", soon: "Bientôt",
+    askTitle: "Une question ?", askLead: "Écrivez-nous et Claire vous répondra par e-mail.",
+    fName: "Nom", fEmail: "E-mail", fPhone: "Téléphone (facultatif)", fIn: "Arrivée (facultatif)", fOut: "Départ (facultatif)",
+    fGuests: "Voyageurs", fMsg: "Message", fSend: "Envoyer le message", fWhats: "Écrire sur WhatsApp",
+    errDates: "Choisissez une date de départ postérieure à l'arrivée.",
+    errEmpty: "Écrivez un message ou choisissez vos dates.",
+    okSent: "Message envoyé. Claire vous répondra par e-mail.",
+    errSend: "L'envoi a échoué. Réessayez ou écrivez-nous par e-mail.",
+    mailOpening: "Ouverture de votre messagerie…", sending: "Envoi en cours…",
+    mailSubject: "Question depuis le site",
+    locTitle: "Où nous trouver", locLead: "Au cœur de Bayeux, en Normandie.",
+    locOpen: "Ouvrir dans Google Maps", locRoute: "Itinéraire", locMapTitle: "Carte : emplacement de l'appartement",
+    footManaged: "Géré par Claire", footLinks: "Retrouvez-nous aussi sur",
+    guestOne: "1 voyageur", guestsN: "{n} voyageurs"
+  },
+
+  en: {
+    navAbout: "The apartment", navBayeux: "What to see", navGallery: "Gallery", navBook: "Book",
+    navLocation: "Location", menu: "Menu",
+    heroTitle: "Step through the garden gate",
+    heroLead: "A small apartment in the heart of Bayeux, with a garden that feels like the entrance to a fantasy kingdom.",
+    heroCta1: "Book my stay", heroCta2: "See the garden",
+    heroToggle: "Open or close the garden gate",
+    heroPh: "Your garden photo will go here", heroAlt: "The apartment garden",
+    aboutTitle: "A small apartment, a splendid garden",
+    aboutP1: "The apartment is small and cosy, made for unhurried rest. What changes everything is on the other side of the door: a splendid garden that turns every morning and every evening into a small event.",
+    aboutP2: "From here you walk the streets of Bayeux's historic centre, then come back to a corner of your own, green and calm.",
+    amenitiesTitle: "What you'll find",
+    amenities: ["Free Wi-Fi", "Equipped kitchen", "Clean towels", "Garden for your use", "Self check-in", "Historic centre on foot"],
+    claireRole: "Your host",
+    claireText: "Claire manages the apartment and is available to answer your questions before and during your stay.",
+    bayeuxTitle: "What to see in Bayeux",
+    bayeuxLead: "Three essentials to start with.",
+    b1t: "The Bayeux Tapestry", b1d: "An embroidery almost 70 metres long, made in the 11th century, telling the Norman conquest of England in 1066.",
+    b1n: "It is currently travelling: it is on show at the British Museum in London until July 2027 while the Bayeux museum is renovated.",
+    b2t: "Historic centre", b2d: "Cobbled streets, timber-framed houses and the cathedral, a short walk from the apartment.",
+    b3t: "D-Day beaches", b3d: "The 1944 landing beaches and their museums, a short drive away.",
+    galleryTitle: "Gallery", galleryLead: "The apartment and the garden, at every hour of the day. Tap a photo to see it larger.",
+    galleryPlaceholder: "Your photo here", lbClose: "Close", lbPrev: "Previous", lbNext: "Next",
+    bookTitle: "Book your stay",
+    bookLead: "Booking and payment are handled directly on the platform you choose.",
+    platAirbnb: "Book on Airbnb", platBooking: "Book on Booking.com", platTrip: "See on Tripadvisor", soon: "Coming soon",
+    askTitle: "Any questions?", askLead: "Write to us and Claire will reply by email.",
+    fName: "Name", fEmail: "Email", fPhone: "Phone (optional)", fIn: "Check-in (optional)", fOut: "Check-out (optional)",
+    fGuests: "Guests", fMsg: "Message", fSend: "Send message", fWhats: "Message on WhatsApp",
+    errDates: "Choose a check-out date after check-in.",
+    errEmpty: "Write a message or pick your dates.",
+    okSent: "Message sent. Claire will reply by email.",
+    errSend: "Could not send. Please try again or email us.",
+    mailOpening: "Opening your email app…", sending: "Sending…",
+    mailSubject: "Question from the website",
+    locTitle: "Where to find us", locLead: "In the centre of Bayeux, Normandy.",
+    locOpen: "Open in Google Maps", locRoute: "Get directions", locMapTitle: "Map showing the apartment's location",
+    footManaged: "Managed by Claire", footLinks: "Find us also on",
+    guestOne: "1 guest", guestsN: "{n} guests"
+  }
+};
+</script>
+
+<!-- =====================================================================
+     3. ESTILOS
+     Estilo: blancos y azules del Egeo, limpio, con la greca griega como
+     detalle. Para cambiar la paleta edita solo las variables de :root. es lo que te da los colores (coleres de internet )
+     ===================================================================== -->
+<style>
+:root {
+  --white: #FFFFFF;
+  --mist: #F2F8F3;
+  --sky: #E1F0E3;
+  --line: #BFDFC4;
+  --azure: #2F6D4F;
+  --azure-dark: #1F4D38;
+  --azure-soft: #8FBFA0;
+  --navy: #16382A;
+  --text: #1C3327;
+  --muted: #52705F;
+  --on-dark: #FFFFFF;
+  --on-dark-muted: #BFE3CC;
+  --error: #B3261E;
+  --ok: #1F6B45;
+  --serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --sans: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --header-h: 68px;
+  /*flores*/
+  --meander: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='16' viewBox='0 0 28 16'%3E%3Cg fill='none' stroke='%232F6D4F' stroke-width='1.6'%3E%3Cpath d='M14 15V6'/%3E%3Ccircle cx='14' cy='4' r='1.6' fill='%232F6D4F' stroke='none'/%3E%3Ccircle cx='11.5' cy='2' r='1.6' fill='%238FBFA0' stroke='none'/%3E%3Ccircle cx='16.5' cy='2' r='1.6' fill='%238FBFA0' stroke='none'/%3E%3Ccircle cx='10.3' cy='5.3' r='1.6' fill='%238FBFA0' stroke='none'/%3E%3Ccircle cx='17.7' cy='5.3' r='1.6' fill='%238FBFA0' stroke='none'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: linear-gradient(180deg, #fff, #E9F5EC); color: var(--text); font: 400 1.05rem/1.7 var(--sans); -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; letter-spacing: -0.015em; }
+p { margin: 0; }
+[hidden] { display: none !important; }
+a { color: inherit; }
+
+:focus-visible { outline: 3px solid var(--azure); outline-offset: 3px; }
+.sec--navy :focus-visible, .site-footer :focus-visible { outline-color: #9CDDC0; }
+.form-panel :focus-visible { outline-color: var(--azure); }
+
+.wrap { width: min(1120px, 100% - 2.5rem); margin-inline: auto; }
+.sec { padding-block: clamp(4rem, 9vw, 7rem); scroll-margin-top: var(--header-h); }
+.sec--white { background: var(--white); }
+.sec--mist { background: linear-gradient(180deg, #F6FAFE, #E4EFF9); }
+.sec--navy { background: var(--navy); color: var(--on-dark); }
+.sec-title { font-size: clamp(2rem, 4.6vw, 3.2rem); line-height: 1.08; margin-bottom: 1rem; font-variation-settings: "opsz" 120; }
+.sec-lead { color: var(--muted); max-width: 52ch; }
+.sec--navy .sec-lead { color: var(--on-dark-muted); }
+
+.meander { height: 16px; background: var(--meander) repeat-x center; }
+
+/* ---- Botones ---- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; padding: .85rem 1.6rem; border-radius: 999px; font: 600 1rem/1.2 var(--sans); text-decoration: none; border: 2px solid transparent; cursor: pointer; transition: background-color .2s, color .2s, border-color .2s; }
+.btn-primary { background: var(--azure); color: #fff; }
+.btn-primary:hover { background: var(--azure-dark); }
+.btn-light { background: #fff; color: var(--navy); }
+.btn-light:hover { background: var(--sky); }
+.btn-ghost { border-color: currentColor; background: transparent; color: inherit; }
+.btn-ghost:hover { background: rgba(30, 99, 176, .1); }
+.btn-sm { padding: .6rem 1.1rem; font-size: .92rem; }
+.btn-block { width: 100%; padding: 1.05rem 1.5rem; font-size: 1.05rem; }
+.btn small { font-size: .8rem; font-weight: 500; opacity: .85; }
+.btn:disabled { opacity: .6; cursor: not-allowed; }
+.btn.is-disabled { opacity: .6; cursor: default; pointer-events: none; }
+
+/* ---- Cabecera ---- */
+.site-header { position: sticky; top: 0; z-index: 20; background: rgba(255, 255, 255, .96); color: var(--navy); border-bottom: 1px solid var(--line); backdrop-filter: blur(6px); }
+.bar { display: flex; align-items: center; gap: 1.25rem; min-height: var(--header-h); }
+.brand { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; text-decoration: none; margin-right: auto; color: var(--azure); }
+.nav { display: flex; gap: 1.6rem; }
+.nav a { color: var(--muted); text-decoration: none; font-weight: 500; font-size: .95rem; }
+.nav a:hover { color: var(--azure); }
+.lang { display: flex; gap: .15rem; }
+.lang button { background: transparent; border: 1px solid transparent; color: var(--muted); font: 600 .85rem var(--sans); padding: .35rem .5rem; border-radius: 6px; cursor: pointer; }
+.lang button[aria-pressed="true"] { color: #fff; background: var(--navy); }
+.menu-btn { display: none; background: transparent; border: 1px solid var(--line); color: inherit; padding: .45rem .8rem; border-radius: 8px; font: 500 .9rem var(--sans); cursor: pointer; }
+
+@media (max-width: 899px) {
+  .menu-btn { display: inline-flex; }
+  .nav { display: none; position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; gap: 1rem; padding: 1.25rem; background: #fff; border-bottom: 1px solid var(--line); }
+  .nav.open { display: flex; }
+  .bar .btn-sm { display: none; }
+}
+
+/* ---- Portada con puerta ---- */
+.hero { background: linear-gradient(160deg, #fff 0%, #EAF6EE 52%, #CFEAD9 100%); padding-block: clamp(2.5rem, 6vw, 5rem) clamp(4rem, 8vw, 6.5rem); }
+.hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 3rem; align-items: center; }
+.hero h1 { font-size: clamp(2.7rem, 6.4vw, 5.2rem); line-height: 1.02; letter-spacing: -0.025em; font-weight: 350; margin-bottom: 1.4rem; color: var(--navy); font-variation-settings: "opsz" 144; }
+.hero .lead { font-size: 1.2rem; color: var(--muted); max-width: 42ch; margin-bottom: 1.6rem; }
+.hero-address { display: inline-flex; align-items: center; gap: .6rem; padding: .6rem 1.1rem; margin-bottom: 1.8rem; background: #fff; border: 1px solid var(--line); border-radius: 999px; font-weight: 600; color: var(--navy); }
+.hero-address svg { width: 20px; height: 20px; flex: none; color: var(--azure); }
+.hero-actions { display: flex; flex-wrap: wrap; gap: .8rem; }
+.hero .btn-ghost { color: var(--azure); }
+
+.portal { justify-self: center; width: min(100%, 380px); padding: 0; cursor: pointer; aspect-ratio: 5 / 7; position: relative; overflow: hidden; perspective: 1000px;
+  border: 12px solid #fff; border-radius: 999px 999px 0 0; background: var(--sky); display: block;
+  box-shadow: 0 0 0 2px #D6EDDD, 0 34px 60px rgba(15, 45, 35, .25); }
+.garden { position: absolute; inset: 0; display: block; }
+.garden-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.garden-ph { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: .7rem; padding: 2rem; text-align: center; color: #fff; font: 500 1rem/1.4 var(--sans); background: linear-gradient(170deg, #A6D9B6, #52916C 55%, #2F6D4F); }
+.garden-ph svg { width: 52px; height: 52px; }
+.door { position: absolute; top: 0; bottom: 0; width: 50.5%; display: block; backface-visibility: hidden; transition: transform 1.9s cubic-bezier(.65, 0, .25, 1); background: linear-gradient(#3E8C68, #2F6D4F); }
+.door::before { content: ""; position: absolute; inset: 14px; border: 3px solid rgba(255, 255, 255, .6); border-radius: 4px; }
+.door::after { content: ""; position: absolute; top: 54%; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 3px rgba(14, 42, 77, .25); }
+.door-l { left: 0; transform-origin: left center; }
+.door-l::after { right: 24px; }
+.door-r { right: 0; transform-origin: right center; }
+.door-r::after { left: 24px; }
+.portal[aria-pressed="true"] .door-l { transform: rotateY(78deg); }
+.portal[aria-pressed="true"] .door-r { transform: rotateY(-78deg); }
+
+@media (max-width: 859px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .portal { width: min(100%, 320px); }
+}
+
+/* ---- Apartamento + Claire ---- */
+.about-grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+.prose p { max-width: 58ch; margin-bottom: 1.1rem; }
+.amenities-title { font-size: 1.4rem; margin: 2.2rem 0 .8rem; }
+.amenities { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; column-gap: 2rem; }
+.amenities li { padding: .7rem 0 .7rem 1.5rem; border-top: 1px solid var(--line); position: relative; }
+.amenities li::before { content: ""; position: absolute; left: 0; top: 1.28rem; width: 8px; height: 8px; border-radius: 50%; background: var(--azure); }
+.host { margin: 0; }
+.host-photo { aspect-ratio: 4 / 5; border-radius: 999px 999px 10px 10px; overflow: hidden; background: linear-gradient(165deg, #C7E4D0, #52916C); display: grid; place-items: center; }
+.host-photo img { width: 100%; height: 100%; object-fit: cover; }
+.host-initial { font-family: var(--serif); font-size: 6rem; color: rgba(255, 255, 255, .92); }
+.host figcaption { padding-top: 1.1rem; }
+.host-name { font-family: var(--serif); font-size: 1.7rem; line-height: 1.1; }
+.host-role { color: var(--azure); font-weight: 600; margin-bottom: .5rem; }
+.host-text { color: var(--muted); font-size: .98rem; line-height: 1.6; }
+@media (max-width: 859px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .host { max-width: 340px; }
+  .amenities { grid-template-columns: 1fr; }
+}
+
+/* ---- Qué visitar: tres columnas horizontales ---- */
+.places { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.2rem, 3vw, 2.2rem); margin-top: 2.5rem; }
+.place-img { aspect-ratio: 4 / 3.1; border-radius: 160px 160px 10px 10px; overflow: hidden; background: var(--sky); margin-bottom: 1.3rem; }
+.place-img svg, .place-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.place h3 { font-size: 1.5rem; margin-bottom: .5rem; }
+.place p { color: var(--muted); font-size: .98rem; line-height: 1.6; }
+.place .place-note { margin-top: .9rem; padding: .7rem .9rem; background: var(--sky); border-left: 3px solid var(--azure); border-radius: 0 6px 6px 0; font-size: .9rem; color: var(--text); }
+@media (max-width: 760px) {
+  /* en móvil siguen en horizontal: se desliza con el dedo */
+  .places { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 82%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 1rem; }
+  .place { scroll-snap-align: start; }
+}
+
+/* ---- Galería con efecto flotante ---- */
+.gallery { list-style: none; margin: 2.5rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: clamp(140px, 21vw, 240px); gap: .9rem; }
+.shot { position: relative; overflow: hidden; border-radius: 8px; background: var(--line); transition: transform .35s cubic-bezier(.2, .7, .2, 1), box-shadow .35s; }
+.shot:hover, .shot:focus-within { transform: translateY(-9px); box-shadow: 0 24px 36px -14px rgba(14, 42, 77, .38); z-index: 2; }
+.shot:nth-child(6n + 1) { grid-row: span 2; }
+.shot:nth-child(6n + 6) { grid-column: span 3; }
+.shot-btn { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.shot-btn img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.2, .7, .2, 1); }
+.shot:hover .shot-btn img { transform: scale(1.06); }
+.shot-btn::after { content: "+"; position: absolute; right: .8rem; bottom: .8rem; width: 2.3rem; height: 2.3rem; display: grid; place-items: center; border-radius: 50%; background: #fff; color: var(--azure); font: 600 1.4rem/1 var(--sans); opacity: 0; transform: scale(.8); transition: opacity .25s, transform .25s; }
+.shot:hover .shot-btn::after, .shot:focus-within .shot-btn::after { opacity: 1; transform: scale(1); }
+.shot-ph { display: grid; place-content: center; justify-items: center; gap: .5rem; font-size: .92rem; font-weight: 500; }
+.shot-ph svg { width: 44px; height: 44px; }
+.ph-0 { background: linear-gradient(160deg, #E9F6EC, #A9DDB7); color: var(--navy); }
+.ph-1 { background: linear-gradient(160deg, #fff, #D6EEDC); color: var(--navy); }
+.ph-2 { background: linear-gradient(160deg, #6FB98D, #2F6D4F); color: #fff; }
+.ph-3 { background: linear-gradient(160deg, #C9E9D2, #8FBFA0); color: var(--navy); }
+@media (max-width: 640px) {
+  .gallery { grid-template-columns: repeat(2, 1fr); }
+  .shot:nth-child(6n + 6) { grid-column: span 2; }
+}
+
+dialog.lightbox { border: 0; padding: 0; background: transparent; max-width: 94vw; max-height: 94vh; overflow: visible; }
+dialog.lightbox::backdrop { background: rgba(15, 45, 35, .92); }
+.lb-inner { display: grid; gap: .8rem; justify-items: center; }
+.lb-inner img { max-width: 92vw; max-height: 78vh; border-radius: 8px; }
+.lb-cap { color: #fff; font-size: .98rem; text-align: center; min-height: 1.5em; }
+.lb-controls { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; justify-content: center; }
+.lb-count { color: var(--on-dark-muted); font-size: .9rem; }
+.lb-controls button { background: #fff; color: var(--navy); border: 0; border-radius: 999px; padding: .55rem 1.2rem; font: 600 .92rem var(--sans); cursor: pointer; }
+.lb-controls button:focus-visible { outline-color: #9CDDC0; }
+
+/* ---- Reserva + contacto ---- */
+.book-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(2rem, 6vw, 4.5rem); align-items: start; }
+.platforms { display: grid; gap: .85rem; margin-top: 2rem; }
+.form-panel { background: #fff; color: var(--text); border-radius: 10px; padding: clamp(1.4rem, 3vw, 2.2rem); }
+.form-panel h3 { font-size: 1.6rem; margin-bottom: .4rem; }
+.form-panel .ask-lead { color: var(--muted); margin-bottom: 1.4rem; }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem 1.2rem; }
+.field { display: grid; gap: .4rem; }
+.field.full { grid-column: 1 / -1; }
+.field label { font-weight: 600; font-size: .92rem; }
+.field input, .field select, .field textarea { width: 100%; font: inherit; color: var(--text); background: var(--mist); border: 1px solid #AFC7DF; border-radius: 6px; padding: .75rem .85rem; }
+.field textarea { min-height: 110px; resize: vertical; }
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: 3px solid var(--azure); outline-offset: 1px; border-color: var(--azure); }
+.trap { position: absolute; left: -9999px; }
+.form-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.5rem; }
+.form-panel .btn-ghost { color: var(--azure); }
+.status { margin-top: 1rem; font-weight: 500; min-height: 1.5em; }
+.status[data-kind="error"] { color: var(--error); }
+.status[data-kind="ok"] { color: var(--ok); }
+@media (max-width: 859px) {
+  .book-grid { grid-template-columns: 1fr; }
+  .fields { grid-template-columns: 1fr; }
+}
+
+/* ---- Ubicación ---- */
+.loc-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+.address { font-family: var(--serif); font-size: 1.7rem; line-height: 1.3; margin: 1.4rem 0 1.6rem; color: var(--navy); }
+.loc-actions { display: flex; flex-wrap: wrap; gap: .7rem; }
+.map { border: 1px solid var(--line); border-radius: 8px 8px 8px 70px; overflow: hidden; background: var(--sky); }
+.map iframe { display: block; width: 100%; height: clamp(320px, 45vw, 460px); border: 0; }
+@media (max-width: 859px) { .loc-grid { grid-template-columns: 1fr; } }
+
+/* ---- Pie ---- */
+.site-footer { background: var(--navy); color: var(--on-dark); }
+.foot { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; padding-block: 3rem; }
+.foot .brand { display: inline-block; margin-bottom: .6rem; color: #fff; }
+.foot p, .foot address { color: var(--on-dark-muted); font-style: normal; font-size: .98rem; }
+.foot h3 { font-size: 1.1rem; margin-bottom: .7rem; }
+.foot ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.3rem; }
+.foot a { color: var(--on-dark); }
+.copy { border-top: 1px solid rgba(255, 255, 255, .14); padding-block: 1.2rem; color: var(--on-dark-muted); font-size: .88rem; }
+@media (max-width: 640px) { .foot { grid-template-columns: 1fr; } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .door, .shot, .shot-btn img, .shot-btn::after { transition: none; }
+  .shot:hover, .shot:focus-within { transform: none; }
+  .shot:hover .shot-btn img { transform: none; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================================
+     4. ESTRUCTURA DE LA PÁGINA
+     Cada <section data-section="..."> es un módulo independiente. El orden
+     y qué secciones se ven se decide en CONFIG.sections (arriba del todo).
+     ===================================================================== -->
+
+<!-- ---------- CABECERA ---------- -->
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="#inicio" data-bind="name"></a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav" data-i18n="menu"></button>
+    <nav class="nav" id="nav"></nav>
+    <div class="lang" role="group" aria-label="Idioma / Langue / Language">
+      <button type="button" data-lang="es" aria-pressed="false">ES</button>
+      <button type="button" data-lang="fr" aria-pressed="false">FR</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <a class="btn btn-primary btn-sm" href="#reservar" data-needs="reservar" data-i18n="navBook"></a>
+  </div>
+</header>
+
+<main id="inicio">
+
+<!-- ---------- PORTADA ---------- -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1 data-i18n="heroTitle"></h1>
+      <p class="lead" data-i18n="heroLead"></p>
+      <p class="hero-address">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <span id="heroAddress"></span>
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#reservar" data-needs="reservar" data-i18n="heroCta1"></a>
+        <a class="btn btn-ghost" href="#galeria" data-needs="galeria" data-i18n="heroCta2"></a>
+      </div>
+    </div>
+
+    <button class="portal" id="portal" type="button" aria-pressed="true" data-i18n-aria="heroToggle">
+      <span class="garden" id="garden">
+        <span class="garden-ph" id="gardenPh">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="9" width="38" height="30" rx="4"/><circle cx="17" cy="21" r="4"/><path d="M6 36l12-11 9 8 6-5 10 9"/></svg>
+          <span data-i18n="heroPh"></span>
+        </span>
+        <!-- ▼▼▼ FOTO DEL JARDÍN: pega entre las comillas la ruta de tu imagen ▼▼▼
+             Ejemplo:  src="fotos/jardin.jpg"   o   src="https://tu-sitio.com/jardin.jpg"
+             Mientras esté vacío se ve el marcador azul de arriba. -->
+        <img class="garden-img" id="gardenImg" src="jardin.jpg" alt="">
+        <!-- ▲▲▲ FIN FOTO DEL JARDÍN ▲▲▲ -->
+      </span>
+      <span class="door door-l"></span>
+      <span class="door door-r"></span>
+    </button>
+  </div>
+</section>
+<div class="meander" aria-hidden="true"></div>
+
+<!-- Las secciones se colocan aquí según CONFIG.sections -->
+<div id="sections">
+
+<!-- ========== SECCIÓN: apartamento + Claire ========== -->
+<section class="sec" id="apartamento" data-section="apartamento">
+  <div class="wrap about-grid">
+    <div class="prose">
+      <h2 class="sec-title" data-i18n="aboutTitle"></h2>
+      <p data-i18n="aboutP1"></p>
+      <p data-i18n="aboutP2"></p>
+      <h3 class="amenities-title" data-i18n="amenitiesTitle"></h3>
+      <ul class="amenities" id="amenities"></ul>
+    </div>
+
+    <figure class="host">
+      <div class="host-photo" id="hostPhoto"><span class="host-initial" aria-hidden="true">C</span></div>
+      <figcaption>
+        <div class="host-name">Claire</div>
+        <div class="host-role" data-i18n="claireRole"></div>
+        <p class="host-text" data-i18n="claireText"></p>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ========== SECCIÓN: qué visitar en Bayeux (3 columnas) ========== -->
+<section class="sec" id="bayeux" data-section="bayeux">
+  <div class="wrap">
+    <h2 class="sec-title" data-i18n="bayeuxTitle"></h2>
+    <p class="sec-lead" data-i18n="bayeuxLead"></p>
+
+    <div class="places">
+      <!-- 1. La Tapisserie (ilustración de un tapiz) -->
+      <article class="place">
+        <div class="place-img" data-place="0">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="400" height="300" fill="#EEF4FA"/>
+            <path d="M0 60H400M0 84H400M0 108H400M0 132H400M0 156H400M0 180H400M0 204H400M0 228H400M0 252H400" stroke="#DCE7F2" stroke-width="2"/>
+            <rect width="400" height="36" fill="#1E63B0"/>
+            <rect y="264" width="400" height="36" fill="#1E63B0"/>
+            <path d="M0 18H400M0 282H400" stroke="#fff" stroke-width="4" stroke-dasharray="16 10"/>
+            <g stroke="#E0B04F" stroke-width="4" stroke-linecap="round" fill="none"><path d="M338 80L300 98M342 86L312 114M334 74L308 84"/></g>
+            <circle cx="340" cy="78" r="8" fill="#E0B04F"/>
+            <rect x="197" y="66" width="6" height="118" fill="#0E2A4D"/>
+            <rect x="150" y="70" width="100" height="6" fill="#0E2A4D"/>
+            <rect x="154" y="76" width="23" height="74" fill="#1E63B0"/>
+            <rect x="177" y="76" width="23" height="74" fill="#fff"/>
+            <rect x="200" y="76" width="23" height="74" fill="#1E63B0"/>
+            <rect x="223" y="76" width="23" height="74" fill="#fff"/>
+            <rect x="154" y="76" width="92" height="74" fill="none" stroke="#0E2A4D" stroke-width="2"/>
+            <path d="M56 152Q66 186 104 196H296Q334 186 344 152Q322 172 296 176H104Q78 172 56 152Z" fill="#0E2A4D"/>
+            <g>
+              <circle cx="122" cy="186" r="7" fill="#fff"/><circle cx="146" cy="186" r="7" fill="#7FB2E5"/>
+              <circle cx="170" cy="186" r="7" fill="#fff"/><circle cx="194" cy="186" r="7" fill="#7FB2E5"/>
+              <circle cx="218" cy="186" r="7" fill="#fff"/><circle cx="242" cy="186" r="7" fill="#7FB2E5"/>
+              <circle cx="266" cy="186" r="7" fill="#fff"/>
+            </g>
+            <path d="M0 204q20-12 40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0V264H0Z" fill="#BBD6F0"/>
+            <path d="M0 204q20-12 40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0" fill="none" stroke="#1E63B0" stroke-width="4"/>
+            <path d="M0 230q20-12 40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0" fill="none" stroke="#7FB2E5" stroke-width="4"/>
+            <path d="M0 252q20-12 40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0" fill="none" stroke="#fff" stroke-width="4"/>
+          </svg>
+        </div>
+        <h3 data-i18n="b1t"></h3>
+        <p data-i18n="b1d"></p>
+        <p class="place-note" data-i18n="b1n"></p>
+      </article>
+
+      <!-- 2. Centro histórico (ilustración de la ciudad) -->
+      <article class="place">
+        <div class="place-img" data-place="1">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs><linearGradient id="citySky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BFDBF3"/><stop offset="1" stop-color="#F6FAFE"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#citySky)"/>
+            <circle cx="60" cy="56" r="22" fill="#fff" opacity=".9"/>
+            <rect y="240" width="400" height="60" fill="#B7D2EC"/>
+            <path d="M0 262H400M30 240v22M90 240v22M150 240v22M210 240v22M270 240v22M330 240v22M60 262v22M120 262v22M180 262v22M240 262v22M300 262v22M360 262v22M0 284H400" stroke="#8FB7DE" stroke-width="2"/>
+            <!-- casa izquierda -->
+            <polygon points="0,182 46,150 92,182" fill="#0E2A4D"/>
+            <rect x="6" y="182" width="80" height="58" fill="#fff" stroke="#0E2A4D" stroke-width="2"/>
+            <path d="M6 206H86M46 182V240M6 182L46 206M86 182L46 206" stroke="#1E63B0" stroke-width="3" fill="none"/>
+            <rect x="16" y="214" width="12" height="18" fill="#7FB2E5"/><rect x="62" y="214" width="12" height="18" fill="#7FB2E5"/>
+            <!-- catedral -->
+            <polygon points="168,72 185,8 202,72" fill="#1E63B0"/>
+            <rect x="168" y="72" width="34" height="90" fill="#F4F8FC" stroke="#1E63B0" stroke-width="2"/>
+            <rect x="112" y="150" width="146" height="90" fill="#F4F8FC" stroke="#1E63B0" stroke-width="2"/>
+            <rect x="112" y="104" width="36" height="136" fill="#fff" stroke="#1E63B0" stroke-width="2"/>
+            <polygon points="112,104 130,44 148,104" fill="#1E63B0"/>
+            <rect x="222" y="104" width="36" height="136" fill="#fff" stroke="#1E63B0" stroke-width="2"/>
+            <polygon points="222,104 240,44 258,104" fill="#1E63B0"/>
+            <path d="M172 240V206a13 13 0 0 1 26 0V240Z" fill="#1E63B0"/>
+            <path d="M150 240V216a8 8 0 0 1 16 0V240ZM204 240V216a8 8 0 0 1 16 0V240Z" fill="#7FB2E5"/>
+            <path d="M124 132v-12a6 6 0 0 1 12 0v12ZM234 132v-12a6 6 0 0 1 12 0v12ZM124 186v-12a6 6 0 0 1 12 0v12ZM234 186v-12a6 6 0 0 1 12 0v12ZM179 112v-14a6 6 0 0 1 12 0v14Z" fill="#7FB2E5"/>
+            <!-- casas de entramado -->
+            <polygon points="276,176 314,142 352,176" fill="#0E2A4D"/>
+            <rect x="282" y="176" width="64" height="64" fill="#fff" stroke="#0E2A4D" stroke-width="2"/>
+            <path d="M282 200H346M282 224H346M314 176V240M282 176L314 200M346 176L314 200" stroke="#1E63B0" stroke-width="3" fill="none"/>
+            <rect x="292" y="208" width="12" height="16" fill="#7FB2E5"/><rect x="324" y="208" width="12" height="16" fill="#7FB2E5"/>
+            <polygon points="346,196 374,170 400,196" fill="#1E63B0"/>
+            <rect x="352" y="196" width="48" height="44" fill="#fff" stroke="#0E2A4D" stroke-width="2"/>
+            <path d="M352 218H400M376 196V240" stroke="#1E63B0" stroke-width="3"/>
+          </svg>
+        </div>
+        <h3 data-i18n="b2t"></h3>
+        <p data-i18n="b2d"></p>
+      </article>
+
+      <!-- 3. Côte du Débarquement (ilustración de un barco) -->
+      <article class="place">
+        <div class="place-img" data-place="2">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <linearGradient id="coastSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BFDBF3"/><stop offset="1" stop-color="#F6FAFE"/></linearGradient>
+              <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8EBDE9"/><stop offset="1" stop-color="#1E63B0"/></linearGradient>
+            </defs>
+            <rect width="400" height="300" fill="url(#coastSky)"/>
+            <circle cx="316" cy="62" r="26" fill="#fff"/>
+            <path d="M0 176Q120 160 240 176T400 168V300H0Z" fill="url(#sea)"/>
+            <path d="M240 174Q300 160 360 166T400 162V180Q320 186 240 180Z" fill="#F4F8FC"/>
+            <path d="M84 170H312L294 210H104Z" fill="#0E2A4D"/>
+            <rect x="150" y="146" width="96" height="24" fill="#F4F8FC"/>
+            <rect x="248" y="152" width="30" height="18" fill="#E1EEF9"/>
+            <rect x="176" y="126" width="44" height="20" fill="#fff"/>
+            <rect x="192" y="104" width="14" height="22" fill="#1E63B0"/>
+            <path d="M163 146V110" stroke="#0E2A4D" stroke-width="3"/>
+            <path d="M163 110l20 6-20 6Z" fill="#fff" stroke="#0E2A4D" stroke-width="2"/>
+            <path d="M110 180H290" stroke="#fff" stroke-width="3"/>
+            <g fill="#7FB2E5"><circle cx="130" cy="194" r="4"/><circle cx="156" cy="194" r="4"/><circle cx="182" cy="194" r="4"/><circle cx="208" cy="194" r="4"/><circle cx="234" cy="194" r="4"/><circle cx="260" cy="194" r="4"/></g>
+            <path d="M0 214q20-12 40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0V300H0Z" fill="#2F7BC8"/>
+            <path d="M0 214q20-12 40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0" fill="none" stroke="#fff" stroke-width="4"/>
+            <path d="M0 246q20-12 40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0" fill="none" stroke="#9CC9F2" stroke-width="4"/>
+            <path d="M0 276q20-12 40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0" fill="none" stroke="#fff" stroke-width="4" opacity=".7"/>
+            <path d="M292 96q8-8 16 0q8-8 16 0M330 118q6-6 12 0q6-6 12 0" fill="none" stroke="#0E2A4D" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 data-i18n="b3t"></h3>
+        <p data-i18n="b3d"></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECCIÓN: galería ========== -->
+<section class="sec" id="galeria" data-section="galeria">
+  <div class="wrap">
+    <h2 class="sec-title" data-i18n="galleryTitle"></h2>
+    <p class="sec-lead" data-i18n="galleryLead"></p>
+    <ul class="gallery" id="gallery"></ul>
+  </div>
+</section>
+
+<!-- ========== SECCIÓN: reservar (plataformas) + preguntas ========== -->
+<section class="sec sec--navy" id="reservar" data-section="reservar">
+  <div class="wrap book-grid">
+    <div>
+      <h2 class="sec-title" data-i18n="bookTitle"></h2>
+      <p class="sec-lead" data-i18n="bookLead"></p>
+      <div class="platforms" id="platforms"></div>
+    </div>
+
+    <div class="form-panel">
+      <h3 data-i18n="askTitle"></h3>
+      <p class="ask-lead" data-i18n="askLead"></p>
+      <form id="bookForm" novalidate>
+        <div class="fields">
+          <div class="field"><label for="name" data-i18n="fName"></label><input id="name" name="name" type="text" autocomplete="name" required></div>
+          <div class="field"><label for="email" data-i18n="fEmail"></label><input id="email" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="checkin" data-i18n="fIn"></label><input id="checkin" name="checkin" type="date"></div>
+          <div class="field"><label for="checkout" data-i18n="fOut"></label><input id="checkout" name="checkout" type="date"></div>
+          <div class="field"><label for="guests" data-i18n="fGuests"></label><select id="guests" name="guests"></select></div>
+          <div class="field"><label for="phone" data-i18n="fPhone"></label><input id="phone" name="phone" type="tel" autocomplete="tel"></div>
+          <div class="field full"><label for="message" data-i18n="fMsg"></label><textarea id="message" name="message"></textarea></div>
+          <input class="trap" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit" id="sendBtn" data-i18n="fSend"></button>
+          <a class="btn btn-ghost" id="whatsBtn" href="#" target="_blank" rel="noopener noreferrer" hidden data-i18n="fWhats"></a>
+        </div>
+        <p class="status" id="formStatus" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECCIÓN: ubicación / mapa ========== -->
+<section class="sec" id="ubicacion" data-section="ubicacion">
+  <div class="wrap loc-grid">
+    <div>
+      <h2 class="sec-title" data-i18n="locTitle"></h2>
+      <p class="sec-lead" data-i18n="locLead"></p>
+      <p class="address" id="addressBlock"></p>
+      <div class="loc-actions">
+        <a class="btn btn-primary" id="mapRoute" href="#" target="_blank" rel="noopener noreferrer" data-i18n="locRoute"></a>
+        <a class="btn btn-ghost" id="mapOpen" href="#" target="_blank" rel="noopener noreferrer" data-i18n="locOpen"></a>
+      </div>
+    </div>
+    <div class="map">
+      <iframe id="mapFrame" title="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+
+<style>
+/* ---------- Perrito: estilos (usan los colores de la web si existen) ---------- */
+.dog-sec .dog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 4.5rem); align-items: center; width: min(1120px, 100% - 2.5rem); margin-inline: auto; }
+.dog-sec .dog-title { font-family: var(--serif, Georgia, serif); font-weight: 400; font-size: clamp(2rem, 4.6vw, 3.2rem); line-height: 1.08; letter-spacing: -0.015em; margin: 0 0 1rem; color: var(--navy, #0E2A4D); }
+.dog-sec .dog-lead { color: var(--muted, #4A6079); max-width: 46ch; margin: 0 0 1.6rem; }
+
+.dog-sec .dog-foods { display: flex; flex-wrap: wrap; gap: .7rem; margin-bottom: 1.6rem; }
+.dog-sec .food-btn { display: inline-flex; align-items: center; gap: .6rem; padding: .7rem 1.2rem .7rem .9rem; border: 2px solid var(--azure, #1E63B0); background: #fff; color: var(--navy, #0E2A4D); border-radius: 999px; font: 600 1rem/1 var(--sans, system-ui, sans-serif); cursor: pointer; transition: background-color .2s, transform .15s; }
+.dog-sec .food-btn:hover { background: #DCEBF8; }
+.dog-sec .food-btn:active { transform: scale(.95); }
+.dog-sec .food-btn:focus-visible, .dog-sec .dog-hit:focus-visible { outline: 3px solid var(--azure, #1E63B0); outline-offset: 3px; }
+.dog-sec .food-emoji { font-size: 1.5rem; line-height: 1; }
+
+.dog-sec .dog-meter { max-width: 340px; }
+.dog-sec .dog-meter-top { display: flex; justify-content: space-between; gap: 1rem; font-weight: 600; font-size: .92rem; margin-bottom: .4rem; color: var(--navy, #0E2A4D); }
+.dog-sec .dog-meter-bar { height: 14px; border-radius: 999px; background: #DCEEE6; overflow: hidden; border: 1px solid #C5E0D3; }
+.dog-sec .dog-meter-fill { height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, #8FBFA0, #2F6D4F); transition: width .6s cubic-bezier(.2, .7, .2, 1); }
+.dog-sec .dog-count { margin: 1rem 0 0; font-weight: 600; color: var(--navy, #0E2A4D); }
+.dog-sec .dog-hint { margin: .2rem 0 0; font-size: .92rem; color: var(--muted, #4A6079); }
+
+.dog-sec .dog-right { display: grid; gap: 1.2rem; justify-items: center; }
+.dog-sec .dog-say { position: relative; margin: 0; padding: .8rem 1.1rem; width: min(100%, 340px); min-height: 3.4em; display: grid; place-items: center; text-align: center; background: #fff; border: 2px solid var(--azure, #1E63B0); border-radius: 16px; font-weight: 500; color: var(--navy, #0E2A4D); }
+.dog-sec .dog-say::after { content: ""; position: absolute; left: 50%; bottom: -11px; width: 18px; height: 18px; background: #fff; border-right: 2px solid var(--azure, #1E63B0); border-bottom: 2px solid var(--azure, #1E63B0); transform: translateX(-50%) rotate(45deg); }
+.dog-sec .dog-say.pop { animation: dogpop .35s ease-out; }
+@keyframes dogpop { from { transform: scale(.94); } to { transform: scale(1); } }
+
+.dog-sec .dog-stage { position: relative; width: min(100%, 340px); aspect-ratio: 240 / 260; margin-top: .4rem; }
+.dog-sec .dog-arch { position: absolute; inset: 5% 5% 0; border-radius: 999px 999px 18px 18px; background: linear-gradient(180deg, #DCEEE6, #fff 85%); border: 2px solid #C5E0D3; }
+.dog-sec .dog { position: absolute; inset: 0; }
+.dog-sec .dog-hit { display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: pointer; border-radius: 16px; -webkit-tap-highlight-color: transparent; }
+.dog-sec .dog-hit svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.dog-sec .dog-mouth-target { position: absolute; left: 50%; top: 51%; width: 1px; height: 1px; pointer-events: none; }
+.dog-sec .dog-fly { position: absolute; left: 0; top: 0; font-size: 2rem; line-height: 1; pointer-events: none; z-index: 6; will-change: transform; }
+.dog-sec .dog-heart { position: absolute; color: var(--azure, #1E63B0); font-size: 1.6rem; line-height: 1; pointer-events: none; z-index: 5; animation: dogrise 1.4s ease-out forwards; }
+@keyframes dogrise { from { opacity: 0; transform: translateY(0) scale(.6); } 20% { opacity: 1; } to { opacity: 0; transform: translateY(-90px) scale(1.1); } }
+
+/* ---- Estados del perrito ---- */
+.dog-sec .dog .tongue, .dog-sec .dog .mouth-open, .dog-sec .dog .eyes-closed, .dog-sec .dog .brows,
+.dog-sec .dog .drool, .dog-sec .dog .zzz, .dog-sec .dog .blush { visibility: hidden; }
+
+.dog-sec .dog-tail { transform-box: fill-box; transform-origin: 0% 100%; transition: transform .4s; }
+.dog-sec .dog-head { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .4s; }
+.dog-sec .ear-l { transform-box: fill-box; transform-origin: 100% 0%; transition: transform .4s; }
+.dog-sec .ear-r { transform-box: fill-box; transform-origin: 0% 0%; transition: transform .4s; }
+.dog-sec .eyes-open { transform-box: fill-box; transform-origin: 50% 50%; animation: dogblink 4.6s infinite; }
+@keyframes dogblink { 0%, 94%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
+
+/* con hambre: orejas caídas, cejas tristes, cola baja y una gotita de baba */
+.dog-sec .dog.is-hungry .brows, .dog-sec .dog.is-hungry .drool { visibility: visible; }
+.dog-sec .dog.is-hungry .ear-l { transform: rotate(10deg); }
+.dog-sec .dog.is-hungry .ear-r { transform: rotate(-10deg); }
+.dog-sec .dog.is-hungry .dog-tail { transform: rotate(18deg); }
+.dog-sec .dog.is-hungry .dog-head { transform: rotate(-3deg); }
+.dog-sec .dog.is-hungry .drool { animation: dogdrip 1.8s ease-in infinite; }
+@keyframes dogdrip { 0% { transform: translateY(-3px); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(9px); opacity: 0; } }
+
+/* comiendo */
+.dog-sec .dog.is-eating .mouth-open { visibility: visible; animation: dogchew .3s linear 4; }
+.dog-sec .dog.is-eating .blush { visibility: visible; }
+.dog-sec .dog.is-eating .dog-head { animation: dogbob .3s ease-in-out 4; }
+.dog-sec .dog.is-eating .dog-tail, .dog-sec .dog.is-happy .dog-tail { animation: dogwag .35s ease-in-out infinite alternate; }
+@keyframes dogchew { 0%, 49% { visibility: visible; } 50%, 100% { visibility: hidden; } }
+@keyframes dogbob { 50% { transform: translateY(5px) rotate(2deg); } }
+@keyframes dogwag { from { transform: rotate(-16deg); } to { transform: rotate(14deg); } }
+
+/* contento */
+.dog-sec .dog.is-happy .tongue, .dog-sec .dog.is-happy .blush { visibility: visible; }
+.dog-sec .dog.is-happy .dog-head { animation: dogtilt 1s ease-in-out infinite alternate; }
+@keyframes dogtilt { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
+
+/* lleno: se duerme */
+.dog-sec .dog.is-full .eyes-closed, .dog-sec .dog.is-full .zzz { visibility: visible; }
+.dog-sec .dog.is-full .eyes-open { visibility: hidden; }
+.dog-sec .dog.is-full .dog-head { animation: dogsnooze 2.8s ease-in-out infinite; }
+.dog-sec .dog.is-full .zzz { animation: dogzzz 2.4s ease-in-out infinite; }
+@keyframes dogsnooze { 50% { transform: translateY(3px); } }
+@keyframes dogzzz { 0%, 100% { opacity: .35; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-6px); } }
+
+@media (max-width: 800px) { .dog-sec .dog-grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) {
+  .dog-sec *, .dog-sec *::before, .dog-sec *::after { animation: none !important; transition: none !important; }
+}
+</style>
+
+<!-- ---------- Perrito: sección ---------- -->
+<section class="sec dog-sec" id="perrito" data-section="perrito">
+  <div class="dog-grid">
+    <div>
+      <h2 class="dog-title" data-dog="title"></h2>
+      <p class="dog-lead" data-dog="lead"></p>
+
+      <div class="dog-foods" role="group" data-dog-aria="foodsLabel">
+        <button type="button" class="food-btn" data-food="bone"><span class="food-emoji" aria-hidden="true"></span><span data-dog="foodBone"></span></button>
+        <button type="button" class="food-btn" data-food="baguette"><span class="food-emoji" aria-hidden="true"></span><span data-dog="foodBaguette"></span></button>
+        <button type="button" class="food-btn" data-food="apple"><span class="food-emoji" aria-hidden="true"></span><span data-dog="foodApple"></span></button>
+      </div>
+
+      <div class="dog-meter">
+        <div class="dog-meter-top"><span data-dog="hunger"></span><span id="dogMood"></span></div>
+        <div class="dog-meter-bar" id="dogBar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="dog-meter-fill" id="dogFill"></div>
+        </div>
+      </div>
+      <p class="dog-count" id="dogCount"></p>
+      <p class="dog-hint" data-dog="hint"></p>
+    </div>
+
+    <div class="dog-right">
+      <p class="dog-say" id="dogSay" role="status" aria-live="polite"></p>
+      <div class="dog-stage" id="dogStage">
+        <div class="dog-arch" aria-hidden="true"></div>
+        <div class="dog is-hungry" id="dog">
+          <button type="button" class="dog-hit" id="dogHit">
+            <svg viewBox="0 0 240 260" aria-hidden="true" focusable="false">
+              <!-- suelo y flores -->
+              <ellipse cx="120" cy="246" rx="86" ry="10" fill="#CFEAD9"/>
+              <g><circle cx="46" cy="242" r="5" fill="#fff"/><circle cx="46" cy="242" r="2" fill="#2F6D4F"/><circle cx="196" cy="244" r="5" fill="#fff"/><circle cx="196" cy="244" r="2" fill="#2F6D4F"/><circle cx="212" cy="238" r="4" fill="#fff"/><circle cx="212" cy="238" r="1.6" fill="#2F6D4F"/></g>
+              <!-- cola -->
+              <g class="dog-tail"><path d="M164 212C198 206 208 172 192 148" fill="none" stroke="#D9A86A" stroke-width="16" stroke-linecap="round"/></g>
+              <!-- cuerpo -->
+              <path d="M62 244C52 182 82 146 120 146s68 36 58 98Z" fill="#FFF7EA" stroke="#0E2A4D" stroke-width="3" stroke-linejoin="round"/>
+              <ellipse cx="120" cy="208" rx="28" ry="34" fill="#fff"/>
+              <rect x="88" y="206" width="24" height="40" rx="12" fill="#FFF7EA" stroke="#0E2A4D" stroke-width="3"/>
+              <rect x="128" y="206" width="24" height="40" rx="12" fill="#FFF7EA" stroke="#0E2A4D" stroke-width="3"/>
+              <!-- collar -->
+              <path d="M84 156Q120 180 156 156" fill="none" stroke="#2F6D4F" stroke-width="10" stroke-linecap="round"/>
+              <!-- cabeza -->
+              <g class="dog-head">
+                <ellipse cx="120" cy="102" rx="54" ry="50" fill="#FFF7EA" stroke="#0E2A4D" stroke-width="3"/>
+                <path d="M132 58C158 62 172 88 162 108C146 106 130 92 132 58Z" fill="#D9A86A"/>
+                <g class="ear-l"><path d="M72 66C42 66 34 118 56 134C74 124 82 96 80 72Z" fill="#D9A86A" stroke="#0E2A4D" stroke-width="3" stroke-linejoin="round"/></g>
+                <g class="ear-r"><path d="M168 66C198 66 206 118 184 134C166 124 158 96 160 72Z" fill="#D9A86A" stroke="#0E2A4D" stroke-width="3" stroke-linejoin="round"/></g>
+                <g class="eyes-open"><circle cx="100" cy="98" r="6.5" fill="#0E2A4D"/><circle cx="140" cy="98" r="6.5" fill="#0E2A4D"/><circle cx="102" cy="95.5" r="2.2" fill="#fff"/><circle cx="142" cy="95.5" r="2.2" fill="#fff"/></g>
+                <g class="eyes-closed" fill="none" stroke="#0E2A4D" stroke-width="3" stroke-linecap="round"><path d="M93 99Q100 106 107 99"/><path d="M133 99Q140 106 147 99"/></g>
+                <g class="brows" stroke="#0E2A4D" stroke-width="3" stroke-linecap="round"><path d="M91 90L108 83"/><path d="M132 83L149 90"/></g>
+                <g class="blush" fill="#F4A7B0" opacity=".75"><circle cx="86" cy="118" r="7"/><circle cx="154" cy="118" r="7"/></g>
+                <ellipse cx="120" cy="124" rx="26" ry="19" fill="#fff" stroke="#0E2A4D" stroke-width="3"/>
+                <path class="tongue" d="M113 132Q120 154 127 132Z" fill="#E86A7A" stroke="#0E2A4D" stroke-width="2"/>
+                <path d="M120 122V131M106 133Q113 139 120 131Q127 139 134 133" fill="none" stroke="#0E2A4D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <g class="mouth-open"><path d="M104 130Q120 160 136 130Z" fill="#0E2A4D"/><path d="M111 143Q120 153 129 143Q120 138 111 143Z" fill="#E86A7A"/></g>
+                <path d="M111 113Q120 106 129 113Q127 122 120 123Q113 122 111 113Z" fill="#0E2A4D"/>
+                <path class="drool" d="M137 136q-5 8 0 11q5-3 0-11Z" fill="#A9D9BE"/>
+              </g>
+              <!-- chapa del collar -->
+              <circle cx="120" cy="178" r="7" fill="#fff" stroke="#0E2A4D" stroke-width="2.5"/>
+              <!-- zzz -->
+              <g class="zzz" fill="#2F6D4F" font-family="Georgia, serif" font-weight="700"><text x="172" y="58" font-size="22">z</text><text x="188" y="38" font-size="16">z</text><text x="200" y="22" font-size="12">z</text></g>
+            </svg>
+          </button>
+        </div>
+        <span class="dog-mouth-target" id="dogMouth"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+/* ---------- Perrito: lógica ---------- */
+(() => {
+  'use strict';
+  const root = document.getElementById('perrito');
+  if (!root) return;
+
+  // ===== AJUSTES DEL PERRITO (edita aquí) =====
+  const DOG_NAME = 'Utah';
+  const START_HUNGER = 22;                 // 0-100: cuanto más bajo, más hambre al entrar
+  const FOODS = {                          // emoji y cuánto llena cada comida
+    bone:     { emoji: '🦴', gain: 25 },
+    baguette: { emoji: '🥖', gain: 35 },
+    apple:    { emoji: '🍎', gain: 15 }
+  };
+  // ============================================
+
+  const TEXT = {
+    es: {
+      title: '{name}, guardián del jardín',
+      lead: 'Lleva toda la mañana vigilando la puerta y ya le suena la tripa. ¿Le das de comer?',
+      foodsLabel: 'Elige qué darle de comer',
+      foodBone: 'Hueso', foodBaguette: 'Baguette', foodApple: 'Manzana normanda',
+      hunger: 'Barriguita', mHungry: 'Con hambre', mOk: 'Contento', mGood: 'Casi lleno', mFull: 'Lleno',
+      count: 'Comidas dadas: {n}', hint: 'Toca al perrito para hacerle mimos.',
+      idleHungry: 'Grrr… Eso ha sido mi tripa.', idleOk: 'Guau. Sigo vigilando la puerta.', idleFull: 'Zzz… Estoy muy lleno.',
+      eat_bone: '¡Un hueso! Croc, croc, croc.', eat_baguette: '¡Baguette! Es un perro muy francés.', eat_apple: 'Manzana de Normandía. ¡Crunch!',
+      full: 'Estoy lleno. Voy a echarme una siesta. Zzz…', tooFull: '¡Ya no puedo más! Vuelve dentro de un rato.',
+      pet: '¡Guau! Me encantan los mimos.', petHungry: 'Gracias por los mimos… pero mejor con comida.',
+      rumble: 'Grrr… mi tripa ha hablado otra vez.',
+      m5: '¡5 comidas! Ya eres amigo de {name}.', m10: '¡10 comidas! {name} te nombra huésped de honor del jardín.',
+      petLabel: 'Acariciar a {name}'
+    },
+    fr: {
+      title: '{name}, gardien du jardin',
+      lead: 'Il surveille la porte depuis ce matin et son ventre gargouille. Vous lui donnez à manger ?',
+      foodsLabel: 'Choisissez quoi lui donner',
+      foodBone: 'Os', foodBaguette: 'Baguette', foodApple: 'Pomme normande',
+      hunger: 'Petit ventre', mHungry: 'Affamé', mOk: 'Content', mGood: 'Presque rassasié', mFull: 'Rassasié',
+      count: 'Repas donnés : {n}', hint: 'Touchez le chien pour lui faire des câlins.',
+      idleHungry: 'Grrr… C\'était mon ventre.', idleOk: 'Ouaf. Je surveille toujours la porte.', idleFull: 'Zzz… J\'ai trop mangé.',
+      eat_bone: 'Un os ! Croc, croc, croc.', eat_baguette: 'Une baguette ! Un chien très français.', eat_apple: 'Pomme de Normandie. Croc !',
+      full: 'Je suis rassasié. Petite sieste. Zzz…', tooFull: 'Je n\'en peux plus ! Revenez tout à l\'heure.',
+      pet: 'Ouaf ! J\'adore les câlins.', petHungry: 'Merci pour les câlins… mais à manger, c\'est mieux.',
+      rumble: 'Grrr… mon ventre a encore parlé.',
+      m5: '5 repas ! Vous êtes maintenant ami avec {name}.', m10: '10 repas ! {name} vous nomme invité d\'honneur du jardin.',
+      petLabel: 'Caresser {name}'
+    },
+    en: {
+      title: '{name}, guardian of the garden',
+      lead: 'He has been watching the gate all morning and his tummy is rumbling. Will you feed him?',
+      foodsLabel: 'Choose what to feed him',
+      foodBone: 'Bone', foodBaguette: 'Baguette', foodApple: 'Norman apple',
+      hunger: 'Tummy', mHungry: 'Hungry', mOk: 'Happy', mGood: 'Almost full', mFull: 'Full',
+      count: 'Meals given: {n}', hint: 'Tap the dog to give him a cuddle.',
+      idleHungry: 'Grrr… That was my tummy.', idleOk: 'Woof. Still guarding the gate.', idleFull: 'Zzz… I\'m so full.',
+      eat_bone: 'A bone! Crunch, crunch, crunch.', eat_baguette: 'A baguette! What a French dog.', eat_apple: 'Apple from Normandy. Crunch!',
+      full: 'I\'m full. Time for a nap. Zzz…', tooFull: 'I can\'t eat another bite! Come back later.',
+      pet: 'Woof! I love cuddles.', petHungry: 'Thanks for the cuddles… but food is better.',
+      rumble: 'Grrr… my tummy spoke again.',
+      m5: '5 meals! You\'re now friends with {name}.', m10: '10 meals! {name} names you guest of honour of the garden.',
+      petLabel: 'Pet {name}'
+    }
+  };
+
+  const $ = s => root.querySelector(s);
+  const dog = $('#dog'), stage = $('#dogStage'), mouth = $('#dogMouth'), hit = $('#dogHit');
+  const sayEl = $('#dogSay'), fill = $('#dogFill'), bar = $('#dogBar'), moodEl = $('#dogMood'), countEl = $('#dogCount');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const lang = () => (document.documentElement.lang || 'es').slice(0, 2);
+  const T = (k, v = {}) => String((TEXT[lang()] || TEXT.es)[k] ?? TEXT.es[k] ?? k)
+    .replace(/\{name\}/g, DOG_NAME).replace(/\{n\}/g, v.n ?? '');
+
+  let hunger = START_HUNGER, flying = false, eating = false, happyUntil = 0, lastNudge = Date.now(), count = 0, sayTimer;
+  try { count = parseInt(localStorage.getItem('dogFeeds'), 10) || 0; } catch (e) {}
+  const saveCount = () => { try { localStorage.setItem('dogFeeds', String(count)); } catch (e) {} };
+
+  const mood = () => eating ? 'eating' : hunger >= 100 ? 'full' : Date.now() < happyUntil ? 'happy' : hunger < 35 ? 'hungry' : 'idle';
+  const defaultLine = () => hunger >= 100 ? T('idleFull') : hunger < 35 ? T('idleHungry') : T('idleOk');
+
+  function render() {
+    dog.className = 'dog is-' + mood();
+    fill.style.width = hunger + '%';
+    bar.setAttribute('aria-valuenow', Math.round(hunger));
+    const label = hunger < 35 ? T('mHungry') : hunger < 70 ? T('mOk') : hunger < 100 ? T('mGood') : T('mFull');
+    moodEl.textContent = label; bar.setAttribute('aria-valuetext', label);
+    countEl.textContent = T('count', { n: count });
+  }
+  function say(text) {
+    sayEl.textContent = text;
+    sayEl.classList.remove('pop'); void sayEl.offsetWidth; sayEl.classList.add('pop');
+    clearTimeout(sayTimer);
+    sayTimer = setTimeout(() => { const d = defaultLine(); if (sayEl.textContent !== d) sayEl.textContent = d; }, 6000);
+  }
+  function applyStrings() {
+    root.querySelectorAll('[data-dog]').forEach(el => { el.textContent = T(el.dataset.dog); });
+    root.querySelectorAll('[data-dog-aria]').forEach(el => el.setAttribute('aria-label', T(el.dataset.dogAria)));
+    hit.setAttribute('aria-label', T('petLabel'));
+    bar.setAttribute('aria-label', T('hunger'));
+  }
+
+  function hearts(n) {
+    for (let i = 0; i < n; i++) {
+      const h = document.createElement('span');
+      h.className = 'dog-heart'; h.textContent = '♥'; h.setAttribute('aria-hidden', 'true');
+      h.style.left = (36 + Math.random() * 28) + '%'; h.style.top = (24 + Math.random() * 10) + '%';
+      h.style.animationDelay = (i * 0.18) + 's';
+      stage.append(h); setTimeout(() => h.remove(), 1700 + i * 180);
+    }
+  }
+
+  function fly(btn, emoji) {
+    return new Promise(resolve => {
+      if (reduce) return resolve();
+      const s = stage.getBoundingClientRect(), b = btn.getBoundingClientRect(), m = mouth.getBoundingClientRect();
+      const el = document.createElement('span');
+      el.className = 'dog-fly'; el.textContent = emoji; el.setAttribute('aria-hidden', 'true'); stage.append(el);
+      const x0 = b.left + b.width / 2 - s.left, y0 = b.top + b.height / 2 - s.top;
+      const x1 = m.left - s.left, y1 = m.top - s.top;
+      const anim = el.animate([
+        { transform: `translate(${x0}px, ${y0}px) translate(-50%, -50%) scale(1) rotate(0deg)` },
+        { transform: `translate(${(x0 + x1) / 2}px, ${Math.min(y0, y1) - 70}px) translate(-50%, -50%) scale(1.25) rotate(140deg)`, offset: .5 },
+        { transform: `translate(${x1}px, ${y1}px) translate(-50%, -50%) scale(.6) rotate(300deg)` }
+      ], { duration: 650, easing: 'cubic-bezier(.4, .1, .5, 1)' });
+      const done = () => { el.remove(); resolve(); };
+      anim.onfinish = done; anim.oncancel = done;
+    });
+  }
+
+  async function feed(kind, btn) {
+    if (flying || eating) return;
+    if (hunger >= 100) { say(T('tooFull')); return; }
+    flying = true;
+    await fly(btn, FOODS[kind].emoji);
+    flying = false; eating = true;
+    hunger = Math.min(100, hunger + FOODS[kind].gain);
+    count++; saveCount();
+    render(); say(T('eat_' + kind)); hearts(3);
+    setTimeout(() => {
+      eating = false; happyUntil = Date.now() + 2500;
+      render();
+      if (hunger >= 100) say(T('full'));
+      else if (count === 5 || count === 10) say(T('m' + count));
+      setTimeout(render, 2600);
+    }, reduce ? 300 : 1300);
+  }
+
+  function pet() {
+    if (flying || eating) return;
+    hearts(2); happyUntil = Date.now() + 2000;
+    say(hunger < 35 ? T('petHungry') : T('pet'));
+    render(); setTimeout(render, 2100);
+  }
+
+  // ---- Arranque ----
+  root.querySelectorAll('.food-btn').forEach(b => {
+    b.querySelector('.food-emoji').textContent = FOODS[b.dataset.food].emoji;
+    b.addEventListener('click', () => feed(b.dataset.food, b));
+  });
+  hit.addEventListener('click', pet);
+  applyStrings(); render(); sayEl.textContent = defaultLine();
+
+  // con el tiempo le vuelve el hambre (poco a poco)
+  setInterval(() => {
+    if (!root.isConnected || flying || eating) return;
+    hunger = Math.max(0, hunger - 2);
+    render();
+    if (hunger < 35 && Date.now() - lastNudge > 15000) { lastNudge = Date.now(); say(T('rumble')); }
+  }, 3500);
+
+  // si la web cambia de idioma, el perrito también
+  new MutationObserver(() => { applyStrings(); render(); sayEl.textContent = defaultLine(); })
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+})();
+</script>
+<!-- ═══════════════════  FIN DEL MÓDULO DEL PERRITO  ═══════════════════ -->
+
+</div><!-- /#sections -->
+</main>
+
+<dialog class="lightbox" id="lightbox" aria-label="Galería">
+  <div class="lb-inner">
+    <img id="lbImg" src="" alt="">
+    <p class="lb-cap" id="lbCap"></p>
+    <div class="lb-controls">
+      <button type="button" id="lbPrev" data-i18n="lbPrev"></button>
+      <span class="lb-count" id="lbCount"></span>
+      <button type="button" id="lbNext" data-i18n="lbNext"></button>
+      <button type="button" id="lbClose" data-i18n="lbClose"></button>
+    </div>
+  </div>
+</dialog>
+
+<!-- ---------- PIE ---------- -->
+<div class="meander" aria-hidden="true"></div>
+<footer class="site-footer">
+  <div class="wrap foot">
+    <div>
+      <span class="brand" data-bind="name"></span>
+      <address id="footAddress"></address>
+      <p data-i18n="footManaged"></p>
+    </div>
+    <div id="footLinksWrap" hidden>
+      <h3 data-i18n="footLinks"></h3>
+      <ul id="footLinks"></ul>
+    </div>
+  </div>
+  <div class="wrap copy">© <span id="year"></span> <span data-bind="name"></span></div>
+</footer>
+
+<!-- =====================================================================
+     5. LÓGICA (módulos: idioma · secciones · enlaces · fotos · galería ·
+     formulario · mapa · portada). No hace falta tocarla para lo normal.
+     ===================================================================== -->
+<script>
+(() => {
+  'use strict';
+
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const SECTION_NAV = { apartamento: 'navAbout', bayeux: 'navBayeux', galeria: 'navGallery', reservar: 'navBook', ubicacion: 'navLocation' };
+  const LINK_LABELS = { instagram: 'Instagram', facebook: 'Facebook', website: 'Web' };
+  const PLATFORMS = [['airbnb', 'platAirbnb'], ['booking', 'platBooking'], ['tripadvisor', 'platTrip']];
+  const state = { lang: CONFIG.defaultLang };
+
+  /* ---------- Módulo: traducción ---------- */
+  function t(key, vars = {}, lang = state.lang) {
+    const dict = I18N[lang] || I18N.es;
+    const val = dict[key] ?? I18N.es[key] ?? key;
+    return typeof val === 'string' ? val.replace(/\{(\w+)\}/g, (_, n) => vars[n] ?? '') : val;
+  }
+  const guestsLabel = (n, lang) => n === 1 ? t('guestOne', {}, lang) : t('guestsN', { n }, lang);
+  const stripOpt = s => s.replace(/\s*\(.*\)/, '');
+
+  function pickInitialLang() {
+    let saved = null;
+    try { saved = localStorage.getItem('lang'); } catch (e) {}
+    if (saved && I18N[saved]) return saved;
+    if (CONFIG.autoDetectLang) {
+      const nav = (navigator.language || '').slice(0, 2);
+      if (I18N[nav]) return nav;
+    }
+    return CONFIG.defaultLang;
+  }
+
+  function applyLang(lang) {
+    state.lang = lang;
+    document.documentElement.lang = lang;
+    try { localStorage.setItem('lang', lang); } catch (e) {}
+    $$('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+    $$('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
+    $$('[data-lang]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+    $('#mapFrame').title = t('locMapTitle');
+    $('#gardenImg').alt = t('heroAlt');
+    renderAmenities();
+    renderGuests();
+    renderPlatforms();
+    renderGallery();
+    renderFooterLinks();
+    refreshWhatsapp();
+  }
+
+  /* ---------- Módulo: datos fijos (nombre, dirección, año) ---------- */
+  function renderStatic() {
+    $$('[data-bind="name"]').forEach(el => { el.textContent = CONFIG.name; });
+    document.title = `${CONFIG.name} · Bayeux`;
+    const a = CONFIG.address;
+    $('#heroAddress').textContent = `${a.line}, ${a.postalCity}`;
+    const block = $('#addressBlock'); block.innerHTML = '';
+    [a.line, a.postalCity, a.country].forEach((line, i) => {
+      if (i) block.append(document.createElement('br'));
+      block.append(document.createTextNode(line));
+    });
+    $('#footAddress').textContent = `${a.line}, ${a.postalCity}, ${a.country}`;
+    $('#year').textContent = new Date().getFullYear();
+  }
+
+  /* ---------- Módulo: secciones elegibles (orden + visibilidad) ---------- */
+  function buildSections() {
+    const holder = $('#sections');
+    const all = $$('[data-section]');
+    all.forEach(s => s.remove());
+    const nav = $('#nav'); nav.innerHTML = '';
+    const used = [];
+    let tone = 0;
+    CONFIG.sections.forEach(id => {
+      const el = all.find(s => s.dataset.section === id);
+      if (!el || used.includes(id)) return;
+      used.push(id);
+      if (!el.classList.contains('sec--navy')) {
+        el.classList.remove('sec--white', 'sec--mist');
+        el.classList.add(tone++ % 2 === 0 ? 'sec--white' : 'sec--mist');   // alterna blanco / azul claro
+      }
+      holder.append(el);
+      if (id !== 'reservar' && SECTION_NAV[id]) {
+        const a = document.createElement('a'); a.href = '#' + id; a.dataset.i18n = SECTION_NAV[id]; nav.append(a);
+      }
+    });
+    // botones que apuntan a una sección: se ocultan si esa sección no está
+    $$('[data-needs]').forEach(el => { el.hidden = !used.includes(el.dataset.needs); });
+  }
+
+  /* ---------- Módulo: botones de reserva (Airbnb, Booking, Tripadvisor) ---------- */
+  function renderPlatforms() {
+    const box = $('#platforms'); box.innerHTML = '';
+    PLATFORMS.forEach(([k, key]) => {
+      const url = CONFIG.links[k];
+      if (url) {
+        const a = document.createElement('a');
+        a.className = 'btn btn-light btn-block'; a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+        a.textContent = t(key); box.append(a);
+      } else {
+        const s = document.createElement('span');
+        s.className = 'btn btn-light btn-block is-disabled'; s.setAttribute('aria-disabled', 'true');
+        s.append(document.createTextNode(t(key) + ' '));
+        const sm = document.createElement('small'); sm.textContent = t('soon'); s.append(sm);
+        box.append(s);
+      }
+    });
+  }
+  function renderFooterLinks() {
+    const foot = $('#footLinks'); foot.innerHTML = '';
+    const all = { airbnb: 'Airbnb', booking: 'Booking.com', tripadvisor: 'Tripadvisor', ...LINK_LABELS };
+    Object.entries(all).forEach(([k, label]) => {
+      const url = CONFIG.links[k]; if (!url) return;
+      const li = document.createElement('li'); const a = document.createElement('a');
+      a.href = url; a.textContent = label; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      li.append(a); foot.append(li);
+    });
+    $('#footLinksWrap').hidden = !foot.children.length;
+  }
+
+  /* ---------- Módulo: apartamento, Claire y fotos de portada ---------- */
+  function renderAmenities() {
+    const ul = $('#amenities'); ul.innerHTML = '';
+    (t('amenities') || []).forEach(txt => { const li = document.createElement('li'); li.textContent = txt; ul.append(li); });
+  }
+  function initPhotos() {
+    // Foto del jardín (viene del <img id="gardenImg"> del HTML)
+    const g = $('#gardenImg');
+    const showPh = () => { g.hidden = true; $('#gardenPh').hidden = false; };
+    if (g.getAttribute('src')) { $('#gardenPh').hidden = true; g.addEventListener('error', showPh); } else { showPh(); }
+
+    // Claire
+    if (CONFIG.photos.claire) {
+      const box = $('#hostPhoto'); box.innerHTML = '';
+      const img = new Image(); img.src = CONFIG.photos.claire; img.alt = 'Claire'; img.loading = 'lazy'; box.append(img);
+    }
+    // Fotos reales para "qué visitar" (si no hay, se queda la ilustración)
+    (CONFIG.photos.places || []).forEach((src, i) => {
+      const box = $(`.place-img[data-place="${i}"]`);
+      if (!src || !box) return;
+      const img = new Image(); img.src = src; img.alt = ''; img.loading = 'lazy';
+      box.innerHTML = ''; box.append(img);
+    });
+  }
+
+  /* ---------- Módulo: galería + lightbox ---------- */
+  const PH_ICON = '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="9" width="38" height="30" rx="4"/><circle cx="17" cy="21" r="4"/><path d="M6 36l12-11 9 8 6-5 10 9"/></svg>';
+  let lbItems = [], lbIndex = 0;
+  const dlg = $('#lightbox');
+
+  function renderGallery() {
+    const grid = $('#gallery'); grid.innerHTML = ''; lbItems = [];
+    CONFIG.photos.gallery.forEach((p, i) => {
+      const li = document.createElement('li'); li.className = 'shot';
+      if (p.src) {
+        const idx = lbItems.push(p) - 1;
+        const b = document.createElement('button'); b.type = 'button'; b.className = 'shot-btn';
+        const img = new Image(); img.src = p.src; img.alt = p.alt || ''; img.loading = 'lazy'; img.decoding = 'async';
+        b.append(img);
+        b.addEventListener('click', () => openLb(idx));
+        li.append(b);
+      } else {
+        li.classList.add('shot-ph', 'ph-' + (i % 4));
+        li.innerHTML = PH_ICON;
+        const s = document.createElement('span'); s.textContent = t('galleryPlaceholder'); li.append(s);
+      }
+      grid.append(li);
+    });
+  }
+  function showLb() {
+    const p = lbItems[lbIndex];
+    $('#lbImg').src = p.src; $('#lbImg').alt = p.alt || '';
+    $('#lbCap').textContent = p.alt || '';
+    $('#lbCount').textContent = `${lbIndex + 1} / ${lbItems.length}`;
+  }
+  function openLb(i) { lbIndex = i; showLb(); if (!dlg.open) dlg.showModal(); }
+  function stepLb(d) { lbIndex = (lbIndex + d + lbItems.length) % lbItems.length; showLb(); }
+  function initLightbox() {
+    $('#lbPrev').addEventListener('click', () => stepLb(-1));
+    $('#lbNext').addEventListener('click', () => stepLb(1));
+    $('#lbClose').addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') stepLb(1);
+      if (e.key === 'ArrowLeft') stepLb(-1);
+    });
+  }
+
+  /* ---------- Módulo: formulario de preguntas ---------- */
+  const pad = n => String(n).padStart(2, '0');
+  const toISO = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const fromISO = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+  const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+
+  function renderGuests() {
+    const sel = $('#guests'); const prev = sel.value; sel.innerHTML = '';
+    for (let i = 1; i <= CONFIG.stay.maxGuests; i++) {
+      const o = document.createElement('option'); o.value = i; o.textContent = guestsLabel(i); sel.append(o);
+    }
+    if (prev) sel.value = prev;
+  }
+  function setStatus(msg, kind) { const el = $('#formStatus'); el.textContent = msg; el.dataset.kind = kind || ''; }
+  function collect() { return Object.fromEntries(new FormData($('#bookForm')).entries()); }
+
+  function buildMessage(p, lang) {
+    const L = k => stripOpt(t(k, {}, lang));
+    return [
+      CONFIG.name,
+      `${L('fName')}: ${p.name || ''}`,
+      `${L('fEmail')}: ${p.email || ''}`,
+      p.phone ? `${L('fPhone')}: ${p.phone}` : '',
+      p.checkin ? `${L('fIn')}: ${p.checkin}` : '',
+      p.checkout ? `${L('fOut')}: ${p.checkout}` : '',
+      `${L('fGuests')}: ${p.guests || ''}`,
+      p.message ? `\n${p.message}` : ''
+    ].filter(Boolean).join('\n');
+  }
+  function refreshWhatsapp() {
+    const btn = $('#whatsBtn'); const num = (CONFIG.contact.whatsapp || '').replace(/\D/g, '');
+    btn.hidden = !num;
+    if (num) btn.href = `https://wa.me/${num}?text=${encodeURIComponent(buildMessage(collect(), CONFIG.hostLang))}`;
+  }
+
+  async function onSubmit(e) {
+    e.preventDefault();
+    const data = collect();
+    if (data._gotcha) return;                                   // antispam
+    if (!data.name.trim()) { setStatus(stripOpt(t('fName')) + ' *', 'error'); $('#name').focus(); return; }
+    if (!/^\S+@\S+\.\S+$/.test(data.email)) { setStatus(stripOpt(t('fEmail')) + ' *', 'error'); $('#email').focus(); return; }
+    const hasDates = data.checkin && data.checkout;
+    if (hasDates && fromISO(data.checkout) <= fromISO(data.checkin)) { setStatus(t('errDates'), 'error'); $('#checkout').focus(); return; }
+    if (!data.message.trim() && !hasDates) { setStatus(t('errEmpty'), 'error'); $('#message').focus(); return; }
+
+    const payload = { ...data, lang: state.lang, property: CONFIG.name };
+    delete payload._gotcha;
+    const endpoint = CONFIG.contact.formEndpoint;
+
+    if (endpoint) {
+      const btn = $('#sendBtn'); btn.disabled = true; setStatus(t('sending'), 'info');
+      try {
+        const r = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        setStatus(t('okSent'), 'ok'); $('#bookForm').reset();
+      } catch (err) {
+        setStatus(t('errSend'), 'error');
+      } finally { btn.disabled = false; }
+    } else {
+      // Sin servicio de formularios: se abre el correo del visitante ya redactado.
+      setStatus(t('mailOpening'), 'info');
+      const subject = `${t('mailSubject', {}, CONFIG.hostLang)} — ${data.name}`;
+      window.location.href = `mailto:${CONFIG.contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(buildMessage(data, CONFIG.hostLang))}`;
+    }
+  }
+
+  function initForm() {
+    const inEl = $('#checkin'), outEl = $('#checkout');
+    inEl.min = toISO(new Date());
+    inEl.addEventListener('change', () => {
+      if (!inEl.value) return;
+      const start = fromISO(inEl.value);
+      outEl.min = toISO(addDays(start, 1));
+      if (outEl.value && fromISO(outEl.value) <= start) outEl.value = toISO(addDays(start, 1));
+    });
+    $('#bookForm').addEventListener('input', () => { setStatus('', ''); refreshWhatsapp(); });
+    $('#bookForm').addEventListener('submit', onSubmit);
+  }
+
+  /* ---------- Módulo: mapa ---------- */
+  function initMap() {
+    const a = CONFIG.address;
+    const q = encodeURIComponent(`${a.line}, ${a.postalCity}, ${a.country}`);
+    $('#mapFrame').src = `https://maps.google.com/maps?q=${q}&z=17&output=embed`;
+    $('#mapOpen').href = `https://www.google.com/maps/search/?api=1&query=${q}`;
+    $('#mapRoute').href = `https://www.google.com/maps/dir/?api=1&destination=${q}`;
+  }
+
+  /* ---------- Módulo: portada (puerta) y menú ---------- */
+  function initPortal() {
+    const p = $('#portal');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    p.addEventListener('click', () => p.setAttribute('aria-pressed', String(p.getAttribute('aria-pressed') !== 'true')));
+    if (!reduce) {
+      p.setAttribute('aria-pressed', 'false');
+      setTimeout(() => p.setAttribute('aria-pressed', 'true'), 500);   // la puerta se abre al cargar
+    }
+  }
+  function initNav() {
+    const btn = $('#menuBtn'), nav = $('#nav');
+    btn.addEventListener('click', () => {
+      const open = nav.classList.toggle('open'); btn.setAttribute('aria-expanded', String(open));
+    });
+    nav.addEventListener('click', e => {
+      if (e.target.closest('a')) { nav.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+    });
+    $$('[data-lang]').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+  }
+
+  /* ---------- Arranque ---------- */
+  renderStatic();
+  buildSections();
+  initPhotos();
+  initLightbox();
+  initForm();
+  initMap();
+  initNav();
+  applyLang(pickInitialLang());
+  initPortal();
+})();
+</script>
+</body>
+</html>
