@@ -5,6 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TinyHouse Bayeux · Apartamento con jardín en Bayeux</title>
 <meta name="description" content="TinyHouse Bayeux: pequeño apartamento con un jardín espléndido en el centro histórico de Bayeux, Normandía. 17 rue aux Coqs, 14400 Bayeux.">
+<meta name="theme-color" content="#16382A">
+<meta property="og:type" content="website">
+<meta property="og:title" content="TinyHouse Bayeux · Apartment with a garden in the heart of Bayeux">
+<meta property="og:description" content="A small apartment with a splendid garden in the historic centre of Bayeux, Normandy. Rated 4.97 on Airbnb.">
+<meta property="og:image" content="jardin.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VacationRental",
+  "name": "TinyHouse Bayeux",
+  "description": "Small apartment with a splendid garden in the historic centre of Bayeux, Normandy.",
+  "image": ["jardin.jpg", "Jardin_grande.jpg", "salon.jpg", "dormitorio.jpg"],
+  "address": { "@type": "PostalAddress", "streetAddress": "17 rue aux Coqs", "postalCode": "14400", "addressLocality": "Bayeux", "addressCountry": "FR" },
+  "containsPlace": { "@type": "Accommodation", "occupancy": { "@type": "QuantitativeValue", "value": 2 }, "numberOfBedrooms": 1, "numberOfBathroomsTotal": 1 },
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": 4.97, "bestRating": 5, "reviewCount": 105 }
+}
+</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M5 30V14a11 11 0 0 1 22 0v16z' fill='%232F6D4F'/%3E%3Cpath d='M10 30V15a6 6 0 0 1 12 0v15z' fill='%23fff'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,9 +44,10 @@ const CONFIG = {
 
   // ---- SECCIONES: elige cuáles se ven y en qué orden ----
   // Borra una línea para ocultar esa sección. Cambia el orden de las líneas
-  // para moverlas. Opciones: apartamento · bayeux · galeria · reservar · ubicacion · perrito
+  // para moverlas. Opciones: apartamento · jardin · bayeux · galeria · reservar · ubicacion · perrito
   sections: [
     "apartamento",
+    "jardin",
     "bayeux",
     "galeria",
     "reservar",
@@ -56,7 +75,12 @@ const CONFIG = {
     formEndpoint: ""
   },
 
+  showSoonButtons: false,    // true = enseña "Próximamente" en las plataformas sin enlace
   stay: { maxGuests: 2 },    // máximo de huéspedes 
+
+  // ---- NOTA DE LOS HUÉSPEDES (sale en la portada y en la banda del jardín) ----
+  // Cópiala de Airbnb cuando cambie (con punto: 4.97). Pon score: 0 para ocultarla.
+  rating: { score: 4.97, count: 105, source: "Airbnb" },
 
   // ---- FOTOS ----
   // La foto principal del jardín la pones en el HTML Abelitoo.
@@ -84,6 +108,10 @@ const I18N = {
     heroTitle: "Cruza la puerta del jardín",
     heroLead: "Un pequeño apartamento en el corazón de Bayeux con un jardín que parece la entrada a un reino de fantasía.",
     heroCta1: "Reservar mi estancia", heroCta2: "Ver el jardín",
+    facts: ["2 huéspedes", "1 dormitorio · cama doble", "1 baño", "Jardín"],
+    ratingReviews: "{n} opiniones en {src}", ratingCta: "Leer las opiniones",
+    bandKicker: "El jardín", bandQuote: "Un jardín escondido en pleno centro de Bayeux, solo para ti.",
+    bookSticky: "Reservar",
     heroToggle: "Abrir o cerrar la puerta del jardín",
     heroPh: "Aquí irá la foto de tu jardín", heroAlt: "El jardín del apartamento",
     aboutTitle: "Un apartamento pequeño, un jardín espléndido",
@@ -125,6 +153,10 @@ const I18N = {
     heroTitle: "Franchissez la porte du jardin",
     heroLead: "Un petit appartement au cœur de Bayeux, avec un jardin qui ressemble à l'entrée d'un royaume féerique.",
     heroCta1: "Réserver mon séjour", heroCta2: "Voir le jardin",
+    facts: ["2 voyageurs", "1 chambre · lit double", "1 salle de bain", "Jardin"],
+    ratingReviews: "{n} avis sur {src}", ratingCta: "Lire les avis",
+    bandKicker: "Le jardin", bandQuote: "Un jardin caché en plein centre de Bayeux, rien que pour vous.",
+    bookSticky: "Réserver",
     heroToggle: "Ouvrir ou fermer la porte du jardin",
     heroPh: "La photo de votre jardin ira ici", heroAlt: "Le jardin de l'appartement",
     aboutTitle: "Un petit appartement, un jardin splendide",
@@ -166,6 +198,10 @@ const I18N = {
     heroTitle: "Step through the garden gate",
     heroLead: "A small apartment in the heart of Bayeux, with a garden that feels like the entrance to a fantasy kingdom.",
     heroCta1: "Book my stay", heroCta2: "See the garden",
+    facts: ["2 guests", "1 bedroom · double bed", "1 bathroom", "Garden"],
+    ratingReviews: "{n} reviews on {src}", ratingCta: "Read the reviews",
+    bandKicker: "The garden", bandQuote: "A hidden garden in the very centre of Bayeux, all to yourself.",
+    bookSticky: "Book",
     heroToggle: "Open or close the garden gate",
     heroPh: "Your garden photo will go here", heroAlt: "The apartment garden",
     aboutTitle: "A small apartment, a splendid garden",
@@ -274,6 +310,8 @@ a { color: inherit; }
 .site-header { position: sticky; top: 0; z-index: 20; background: rgba(255, 255, 255, .96); color: var(--navy); border-bottom: 1px solid var(--line); backdrop-filter: blur(6px); }
 .bar { display: flex; align-items: center; gap: 1.25rem; min-height: var(--header-h); }
 .brand { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; text-decoration: none; margin-right: auto; color: var(--azure); }
+.bar .brand { white-space: nowrap; }
+@media (max-width: 420px) { .bar { gap: .7rem; } .bar .brand { font-size: 1.12rem; } .lang button { padding: .35rem .4rem; } }
 .nav { display: flex; gap: 1.6rem; }
 .nav a { color: var(--muted); text-decoration: none; font-weight: 500; font-size: .95rem; }
 .nav a:hover { color: var(--azure); }
@@ -430,8 +468,52 @@ dialog.lightbox::backdrop { background: rgba(15, 45, 35, .92); }
 .copy { border-top: 1px solid rgba(255, 255, 255, .14); padding-block: 1.2rem; color: var(--on-dark-muted); font-size: .88rem; }
 @media (max-width: 640px) { .foot { grid-template-columns: 1fr; } }
 
+
+/* ---- Nota de huéspedes, datos rápidos ---- */
+.rating { display: inline-flex; align-items: center; gap: .55rem; text-decoration: none; color: var(--navy); font-weight: 600; }
+.rating .stars { color: #C9A227; letter-spacing: 2px; font-size: 1rem; }
+.rating .rcount { color: var(--muted); font-weight: 500; font-size: .95rem; }
+.rating:hover .rcount { color: var(--azure); text-decoration: underline; text-underline-offset: 3px; }
+.hero-rating { margin-bottom: 1.1rem; }
+.facts { list-style: none; margin: 2.2rem 0 0; padding: 1.2rem 0 0; display: flex; flex-wrap: wrap; gap: .5rem 1.6rem; border-top: 1px solid var(--line); max-width: 560px; }
+.facts li { display: inline-flex; align-items: center; gap: .5rem; color: var(--muted); font-size: .95rem; font-weight: 500; }
+.facts li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--azure-soft); }
+
+/* ---- Banda del jardín con fondo flotante ---- */
+.band { position: relative; overflow: hidden; min-height: clamp(420px, 72vh, 680px); display: grid; place-items: center; text-align: center; color: #fff; isolation: isolate; padding: 5rem 1.25rem; }
+.band-bg { position: absolute; inset: -40% 0; background: center / cover no-repeat; z-index: -2; will-change: transform; }
+.band::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(14, 38, 28, .35), rgba(14, 38, 28, .62)); }
+.band-in { max-width: 820px; }
+.band-kicker { font: 600 .8rem var(--sans); letter-spacing: .3em; text-transform: uppercase; color: #CDEBD8; }
+.band-quote { font-family: var(--serif); font-weight: 350; font-size: clamp(2rem, 4.8vw, 3.6rem); line-height: 1.12; margin: 1rem 0 1.8rem; font-variation-settings: "opsz" 144; text-wrap: balance; }
+.band .rating { color: #fff; background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .35); padding: .7rem 1.2rem; border-radius: 999px; backdrop-filter: blur(6px); }
+.band .rating .rcount { color: #E3F3E9; }
+.rcount { white-space: nowrap; }
+@media (max-width: 520px) { .band .rating { flex-wrap: wrap; justify-content: center; border-radius: 22px; } }
+.band .rating:hover .rcount { color: #fff; }
+
+/* ---- Cabecera al hacer scroll, enlace activo, botón móvil ---- */
+.site-header { transition: box-shadow .3s; }
+.site-header.scrolled { box-shadow: 0 10px 30px -18px rgba(15, 45, 35, .45); }
+.nav a { position: relative; }
+.nav a.on { color: var(--azure); }
+.nav a.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; border-radius: 2px; background: var(--azure); }
+.book-fab { display: none; }
+@media (max-width: 899px) {
+  .nav a.on::after { display: none; }
+  .book-fab { display: flex; position: fixed; left: 1rem; right: 1rem; bottom: max(1rem, env(safe-area-inset-bottom)); z-index: 30; justify-content: center; transform: translateY(150%); transition: transform .45s cubic-bezier(.2, .7, .2, 1); }
+  .book-fab.show { transform: none; }
+  .book-fab .btn { width: 100%; box-shadow: 0 16px 30px -12px rgba(15, 45, 35, .55); }
+  .site-footer { padding-bottom: 5rem; }
+}
+
+/* ---- Aparición suave al hacer scroll ---- */
+.js .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s cubic-bezier(.2, .7, .2, 1), transform .9s cubic-bezier(.2, .7, .2, 1); }
+.js .reveal.in { opacity: 1; transform: none; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .js .reveal { opacity: 1; transform: none; transition: none; }
   .door, .shot, .shot-btn img, .shot-btn::after { transition: none; }
   .shot:hover, .shot:focus-within { transform: none; }
   .shot:hover .shot-btn img { transform: none; }
@@ -468,6 +550,7 @@ dialog.lightbox::backdrop { background: rgba(15, 45, 35, .92); }
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
+      <a class="rating hero-rating" id="heroRating" href="#" target="_blank" rel="noopener noreferrer" hidden><span class="stars" aria-hidden="true">★★★★★</span><span class="rscore"></span><span class="rcount"></span></a>
       <h1 data-i18n="heroTitle"></h1>
       <p class="lead" data-i18n="heroLead"></p>
       <p class="hero-address">
@@ -478,6 +561,7 @@ dialog.lightbox::backdrop { background: rgba(15, 45, 35, .92); }
         <a class="btn btn-primary" href="#reservar" data-needs="reservar" data-i18n="heroCta1"></a>
         <a class="btn btn-ghost" href="#galeria" data-needs="galeria" data-i18n="heroCta2"></a>
       </div>
+      <ul class="facts" id="facts"></ul>
     </div>
 
     <button class="portal" id="portal" type="button" aria-pressed="true" data-i18n-aria="heroToggle">
@@ -521,6 +605,17 @@ dialog.lightbox::backdrop { background: rgba(15, 45, 35, .92); }
         <p class="host-text" data-i18n="claireText"></p>
       </figcaption>
     </figure>
+  </div>
+</section>
+
+<!-- ========== SECCIÓN: banda del jardín (foto de fondo flotante) ==========
+     Cambia la foto en el style de abajo: url('TU-FOTO.jpg') -->
+<section class="band" id="jardin" data-section="jardin">
+  <div class="band-bg" data-parallax="0.3" style="background-image: url('Jardin_grande.jpg')"></div>
+  <div class="band-in">
+    <p class="band-kicker" data-i18n="bandKicker"></p>
+    <p class="band-quote" data-i18n="bandQuote"></p>
+    <a class="rating" id="bandRating" href="#" target="_blank" rel="noopener noreferrer" hidden><span class="stars" aria-hidden="true">★★★★★</span><span class="rscore"></span><span class="rcount"></span></a>
   </div>
 </section>
 
@@ -1052,6 +1147,8 @@ dialog.lightbox::backdrop { background: rgba(15, 45, 35, .92); }
   </div>
 </dialog>
 
+<div class="book-fab" id="bookFab" data-needs="reservar"><a class="btn btn-primary" href="#reservar" data-i18n="bookSticky"></a></div>
+
 <!-- ---------- PIE ---------- -->
 <div class="meander" aria-hidden="true"></div>
 <footer class="site-footer">
@@ -1114,6 +1211,8 @@ dialog.lightbox::backdrop { background: rgba(15, 45, 35, .92); }
     $('#mapFrame').title = t('locMapTitle');
     $('#gardenImg').alt = t('heroAlt');
     renderAmenities();
+    renderFacts();
+    renderRating();
     renderGuests();
     renderPlatforms();
     renderGallery();
@@ -1148,7 +1247,7 @@ dialog.lightbox::backdrop { background: rgba(15, 45, 35, .92); }
       const el = all.find(s => s.dataset.section === id);
       if (!el || used.includes(id)) return;
       used.push(id);
-      if (!el.classList.contains('sec--navy')) {
+      if (!el.classList.contains('sec--navy') && !el.classList.contains('band')) {
         el.classList.remove('sec--white', 'sec--mist');
         el.classList.add(tone++ % 2 === 0 ? 'sec--white' : 'sec--mist');   // alterna blanco / azul claro
       }
@@ -1170,7 +1269,7 @@ dialog.lightbox::backdrop { background: rgba(15, 45, 35, .92); }
         const a = document.createElement('a');
         a.className = 'btn btn-light btn-block'; a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
         a.textContent = t(key); box.append(a);
-      } else {
+      } else if (CONFIG.showSoonButtons) {
         const s = document.createElement('span');
         s.className = 'btn btn-light btn-block is-disabled'; s.setAttribute('aria-disabled', 'true');
         s.append(document.createTextNode(t(key) + ' '));
@@ -1368,6 +1467,70 @@ dialog.lightbox::backdrop { background: rgba(15, 45, 35, .92); }
     $$('[data-lang]').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
   }
 
+
+  /* ---------- Módulo: datos rápidos y nota de huéspedes ---------- */
+  function renderFacts() {
+    const ul = $('#facts'); ul.innerHTML = '';
+    (t('facts') || []).forEach(txt => { const li = document.createElement('li'); li.textContent = txt; ul.append(li); });
+  }
+  function renderRating() {
+    const r = CONFIG.rating || {};
+    const url = CONFIG.links[(r.source || '').toLowerCase()] || CONFIG.links.airbnb || '';
+    $$('#heroRating, #bandRating').forEach(a => {
+      a.hidden = !r.score;
+      if (!r.score) return;
+      a.href = url || '#reservar';
+      if (!url) a.removeAttribute('target');
+      $('.rscore', a).textContent = Number(r.score).toLocaleString(state.lang, { minimumFractionDigits: 2 });
+      $('.rcount', a).textContent = '· ' + t('ratingReviews', { n: r.count, src: r.source });
+      a.setAttribute('aria-label', `${Number(r.score).toLocaleString(state.lang)} / 5 · ${t('ratingCta')}`);
+    });
+  }
+
+  /* ---------- Módulo: efectos al hacer scroll (fondo flotante, cabecera, apariciones) ---------- */
+  function initScrollFx() {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const header = $('.site-header'), fab = $('#bookFab'), book = $('#reservar');
+    const layers = $$('[data-parallax]');
+    const links = () => $$('#nav a');
+    const secs = () => $$('#sections > section[id]');
+    let ticking = false;
+    function frame() {
+      const vh = innerHeight, y = scrollY;
+      header.classList.toggle('scrolled', y > 8);
+      if (fab && !fab.hidden) {
+        const b = book ? book.getBoundingClientRect() : null;
+        const onBook = b && b.top < vh && b.bottom > 0;
+        fab.classList.toggle('show', y > vh * .7 && !onBook);
+      }
+      let cur = '';
+      secs().forEach(s => { if (s.getBoundingClientRect().top < vh * .35) cur = s.id; });
+      links().forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + cur));
+      if (!reduce) layers.forEach(el => {
+        const r = el.parentElement.getBoundingClientRect();
+        if (r.bottom < -100 || r.top > vh + 100) return;
+        el.style.transform = `translate3d(0, ${((r.top + r.height / 2 - vh / 2) * -parseFloat(el.dataset.parallax)).toFixed(1)}px, 0)`;
+      });
+      ticking = false;
+    }
+    const tick = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
+    addEventListener('scroll', tick, { passive: true });
+    addEventListener('resize', tick);
+    frame();
+
+    if (reduce || !('IntersectionObserver' in window)) return;
+    document.documentElement.classList.add('js');
+    const items = $$('.sec-title, .sec-lead, .prose > p, .amenities-title, .amenities, .host, .place, .shot, .platforms, .form-panel, .address, .loc-actions, .map, .band-in');
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }), { rootMargin: '0px 0px -6% 0px', threshold: .08 });
+    items.forEach(el => {
+      const sibs = [...el.parentElement.children].filter(c => items.includes(c));
+      el.style.transitionDelay = (Math.min(sibs.indexOf(el), 5) * 0.08) + 's';
+      el.classList.add('reveal'); io.observe(el);
+    });
+  }
+
   /* ---------- Arranque ---------- */
   renderStatic();
   buildSections();
@@ -1378,6 +1541,7 @@ dialog.lightbox::backdrop { background: rgba(15, 45, 35, .92); }
   initNav();
   applyLang(pickInitialLang());
   initPortal();
+  initScrollFx();
 })();
 </script>
 </body>
